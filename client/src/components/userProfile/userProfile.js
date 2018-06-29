@@ -1,0 +1,66 @@
+import React, { Component } from "react";
+import "./userProfile.css"
+import API from "../../util/API";
+class UserProfile extends Component {
+    state={
+        fullname: "",
+        id : "",
+        username: "",
+        points : 0,
+        email : ""
+    }
+
+    componentDidMount(){
+        let userId = window.location.hash.replace("#", "");
+        API.getUser(userId)
+        .then((user) =>{
+            this.setState({...user.data})
+            console.log(this.state)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
+    render() {
+        return (
+            <div>
+
+                <nav className="topMargin">
+                    <div className="nav-wrapper light-blue darken-3">
+                        <a href="#" className="brand-logo center">Logo</a>
+                        <ul id="nav-mobile" className="right hide-on-med-and-down">
+                            <li><a href="sass.html">Sass</a></li>
+                            <li><a href="badges.html">Components</a></li>
+                            <li><a href="collapsible.html">JavaScript</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                {/* <a href="#" data-target="slide-out" class="btn-floating btn-medium light-blue darken-3 sidenav-trigger"><i class="material-icons">menu</i></a> */}
+                <a href="#" data-target="slide-out" className="sidenav-trigger">
+                    <i className="medium material-icons leftSide">chevron_right</i>
+                </a>
+
+                <ul id="slide-out" className="sidenav">
+                    <li><div className="user-view">
+                        <div className="background">
+                            <img src="./images/sidebar.jpg" alt="" width="300px" height="200px" />
+                        </div>
+                        <a href="#user"><img className="circle" src="./images/person.jpg" alt="" /></a>
+                        <a href="#name"><span className="white-text name">{this.state.fullname}</span></a>
+                        <a href="#email"><span className="white-text email">{this.state.email}</span></a>
+                    </div></li>
+                    <li><a href="#!"><i className="material-icons">cloud</i>First Link With Icon</a></li>
+                    <li><a href="#!">Second Link</a></li>
+                    <li><div className="divider"></div></li>
+                    <li><a className="subheader">Subheader</a></li>
+                    <li><a className="waves-effect" href="#!">Third Link With Waves</a></li>
+                </ul>
+
+
+            </div>
+        )
+    }
+}
+
+export default UserProfile;

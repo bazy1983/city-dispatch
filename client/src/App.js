@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 import './App.css';
-import User from "./pages/user"
+import User from "./pages/auth";
+import UserDash from "./pages/userDash";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <User/>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Route exact path="/" component={User} />
+          <Route path="/profile" component={UserDash} />
+        </div>
+      </BrowserRouter>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Login from "../components/userlogin";
-import Signup from "../components/signup";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import Login from "../../components/userlogin";
+import Signup from "../../components/signup";
 import "./user.css"
 
 class User extends Component {
@@ -30,8 +30,7 @@ class User extends Component {
                                 </div>
                             </Signup>
                         }>
-                        >
-                </Route>
+                    </Route>
                 </div>
             </BrowserRouter>
         )

@@ -28,9 +28,10 @@ module.exports = function (passport) {
 
     router.post("/login", passport.authenticate("local", {
         failureRedirect: "/",
-        successRedirect: "/profile"
+        // successRedirect: "/profile"
     }), function (req, res) {
-        res.send("hey")
+        res.redirect("/profile#" + req.user.id)
+        // res.send("hey")
     })
 
 

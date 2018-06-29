@@ -1,0 +1,10 @@
+.leftSide {
+    padding: 0;
+    margin: 0;
+    left: 10px;
+    top: 49vh;
+    position: fixed;
+}
+.topMargin{
+    margin-top: 20px;
+}

@@ -14,7 +14,7 @@ require("./config/passport")(passport);
 
 //requiring routes
 var htmlRoutes = require('./routes/htmlRoutes');
-// var usersRouter = require('./routes/users');
+var apiRoutes = require('./routes/apiRoutes');
 var authRouter = require("./routes/authRoutes")(passport);
 
 
@@ -41,7 +41,7 @@ app.use(passport.session());
 
 //setup routes
 app.use('/', htmlRoutes);
-// app.use('/users', usersRouter);
+app.use('/api', apiRoutes);
 app.use("/auth", authRouter);
 
 // Serve up static assets (usually on heroku)
