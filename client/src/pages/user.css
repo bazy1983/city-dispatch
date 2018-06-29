@@ -1,0 +1,8 @@
+.backgroundImage{
+    background-color: #eee;
+    background-image: url(/static/media/bg.056c0341.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 100vh;
+    overflow: auto;
+}
