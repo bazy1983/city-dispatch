@@ -15,7 +15,7 @@ class UserProfile extends Component {
         API.getUser(userId)
         .then((user) =>{
             this.setState({...user.data})
-            console.log(this.state)
+            // console.log(this.state)
         })
         .catch((err)=>{
             console.log(err)

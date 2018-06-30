@@ -4,6 +4,7 @@
     left: 10px;
     top: 49vh;
     position: fixed;
+    z-index: 2;
 }
 .topMargin{
     margin-top: 20px;
