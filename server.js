@@ -15,17 +15,19 @@ require("./config/passport")(passport);
 //requiring routes
 var htmlRoutes = require('./routes/htmlRoutes');
 var apiRoutes = require('./routes/apiRoutes');
+var withFileRoutes = require('./routes/withfileRoutes')
 var authRouter = require("./routes/authRoutes")(passport);
+
 
 
 const PORT = process.env.PORT || 8000;
 const app = express();
 
 //connect to mongoDB
-const mongoKey = process.env.MONGO_URI || "mongodb://localhost:27017/ServicesDB"
-mongoose.connect(mongoKey, ()=>{
-  console.log("connected to servicesDB")
-})
+// const mongoKey = process.env.MONGO_URI || "mongodb://localhost:27017/ServicesDB"
+// mongoose.connect(mongoKey, ()=>{
+//   console.log("connected to servicesDB")
+// })
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,6 +50,7 @@ app.use(passport.session());
 app.use('/', htmlRoutes);
 app.use('/api', apiRoutes);
 app.use("/auth", authRouter);
+app.use("/withfile", withFileRoutes);
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {

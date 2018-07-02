@@ -31,10 +31,15 @@ module.exports = function (passport) {
         // successRedirect: "/profile"
     }), function (req, res) {
         res.cookie("_acc", req.user.id)
-        console.log(res.cookie.toString())
+        // console.log(res.cookie.toString())
         res.redirect("/profile")
         // res.send("hey")
     })
+
+    router.get('/logout', function(req, res){
+        req.logout();
+        res.status(200).end();
+      });
 
 
 

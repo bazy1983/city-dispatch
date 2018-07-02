@@ -30,8 +30,8 @@ const TicketSchema = new Schema({
     desc: {
         type: String
     },
-    image: {
-        type: Number
+    imgBefore: {
+        type: String
     },
     inspectorId: {
         type : String

@@ -13,8 +13,8 @@ class UserProfile extends Component {
     componentDidMount() {
         let id;
         var value = "; " + document.cookie;
-        var parts = value.split("; " + "_acc" + "=");
-        if (parts.length == 2) {
+        var parts = value.split("; _acc=");
+        if (parts.length === 2) {
             id = parts.pop().split(";").shift().replace("j%3A%22", "").replace("%22", "");
             API.getUser(id)
                 .then((user) => {
@@ -47,19 +47,17 @@ class UserProfile extends Component {
                 </a>
 
                 <ul id="slide-out" className="sidenav">
-                    <li><div className="user-view">
-                        <div className="background">
-                            <img src="./images/sidebar.jpg" alt="" width="300px" height="200px" />
+                    <li>
+                        <div className="user-view">
+                            <div className="background">
+                                <img src="./images/sidebar.jpg" alt="" width="300px" height="200px" />
+                            </div>
+                            <a href="#user"><img className="circle" src="./images/person.jpg" alt="" /></a>
+                            <a href="#name"><strong className="white-text name">{this.state.fullname}</strong></a>
+                            <a href="#email"><strong className="white-text email">{this.state.email}</strong></a>
                         </div>
-                        <a href="#user"><img className="circle" src="./images/person.jpg" alt="" /></a>
-                        <a href="#name"><span className="white-text name">{this.state.fullname}</span></a>
-                        <a href="#email"><span className="white-text email">{this.state.email}</span></a>
-                    </div></li>
-                    <li><a href="#!"><i className="material-icons">cloud</i>First Link With Icon</a></li>
-                    <li><a href="#!">Second Link</a></li>
-                    <li><div className="divider"></div></li>
-                    <li><a className="subheader">Subheader</a></li>
-                    <li><a className="waves-effect" href="#!">Third Link With Waves</a></li>
+                    </li>
+                    {this.props.children}
                 </ul>
 
 
