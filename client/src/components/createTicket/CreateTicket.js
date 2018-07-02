@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./createTicket.css";
 import axios from "axios";
 
 class CreateTicket extends Component {
@@ -27,7 +28,7 @@ class CreateTicket extends Component {
     render() {
         return (
             <div className="row container">
-                <form className="col s12">
+                <form className="col s12 card hoverable">
                     <div className="row">
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">border_vertical</i>
@@ -56,8 +57,8 @@ class CreateTicket extends Component {
                         </div>
 
                     </div>
-                    <button class="btn waves-effect waves-light align-center" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
+                    <button className="btn waves-effect waves-light align-center margin-down" type="submit" name="action">Submit
+                        <i className="material-icons right">send</i>
                     </button>
                 </form>
             </div>

@@ -4,10 +4,15 @@ var db = require("../models");
 
 module.exports = function(passport) {
     passport.serializeUser(function(user, done){
-        done(null, user)
+        // console.log(user)
+        done(null, user.id)
     });
-    passport.deserializeUser(function(user, done){
-        done(null, user)
+    passport.deserializeUser(function(id, done){
+        // console.log(id)
+        db.User.findById(id, (err, user)=>{
+            done(null, user)
+
+        })
     });
 
     passport.use(new localStrategy(function(username, password, done){

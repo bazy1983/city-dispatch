@@ -22,13 +22,15 @@ router.get("/getUser/:id", (req, res) => {
 })
 
 //get weather information
-router.get("/getWeather", (req, res) => {
+router.get("/getWeather/:lat/:log", (req, res) => {
+    // console.log(req.params)
     let URI = "https://api.openweathermap.org/data/2.5/weather?";
     let key = "&appid=" + keys.weather;
-    let coord = `lat=${req.query.lat}&lon=${req.query.log}`
+    let coord = `lat=${req.params.lat}&lon=${req.params.log}`
     let units = "&units=imperial"
     request(URI + coord + key + units, (err, response, body) => {
         if(err) console.log(err);
+        body = JSON.parse(body)
         // console.log(body);
         res.json(body)
     })

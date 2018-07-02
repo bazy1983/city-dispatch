@@ -34,10 +34,15 @@ app.use(cookieParser());
 app.use(session({
   secret : "thesecret",
   saveUninitialized: false,
-  resave: false
+  resave: false,
+  // store : user,
+  cookie : {
+    httpOnly : false,
+  }
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+// console.log(cookieParser)
 
 //setup routes
 app.use('/', htmlRoutes);

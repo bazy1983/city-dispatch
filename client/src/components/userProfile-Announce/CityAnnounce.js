@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class CityAnnounce extends Component {
 
-    
 
     render() {
         return (

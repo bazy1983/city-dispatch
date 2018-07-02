@@ -2,24 +2,29 @@ import React, { Component } from "react";
 import "./userProfile.css"
 import API from "../../util/API";
 class UserProfile extends Component {
-    state={
+    state = {
         fullname: "",
-        id : "",
+        id: "",
         username: "",
-        points : 0,
-        email : ""
+        points: 0,
+        email: ""
     }
 
-    componentDidMount(){
-        let userId = window.location.hash.replace("#", "");
-        API.getUser(userId)
-        .then((user) =>{
-            this.setState({...user.data})
-            // console.log(this.state)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+    componentDidMount() {
+        let id;
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + "_acc" + "=");
+        if (parts.length == 2) {
+            id = parts.pop().split(";").shift().replace("j%3A%22", "").replace("%22", "");
+            API.getUser(id)
+                .then((user) => {
+                    this.setState({ ...user.data })
+                    // console.log(this.state)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
     }
 
     render() {

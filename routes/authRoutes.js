@@ -30,7 +30,9 @@ module.exports = function (passport) {
         failureRedirect: "/",
         // successRedirect: "/profile"
     }), function (req, res) {
-        res.redirect("/profile#" + req.user.id)
+        res.cookie("_acc", req.user.id)
+        console.log(res.cookie.toString())
+        res.redirect("/profile")
         // res.send("hey")
     })
 
