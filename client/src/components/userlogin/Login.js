@@ -6,7 +6,7 @@ class Login extends Component {
         return (
             <div className="valign-wrapper row login-box">
                 <div className="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
-                    <form action="/auth/login" method="POST">
+                    <form action={this.props.login} method="POST">
                         <div className="card-content">
                             <span className="card-title">Please Login</span>
                             <div className="row">

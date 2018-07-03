@@ -15,7 +15,8 @@ module.exports = function(passport) {
         })
     });
 
-    passport.use(new localStrategy(function(username, password, done){
+    //local strategy to authinticate user accounts
+    passport.use("user", new localStrategy(function(username, password, done){
         db.User.findOne({
             username : username,
         })
@@ -43,5 +44,35 @@ module.exports = function(passport) {
         .catch(function(err){
             done(err);
         })
-    }))
+    }));
+
+        //local strategy to authinticate user accounts
+        passport.use("employee", new localStrategy(function(username, password, done){
+            db.Employee.findOne({
+                username : username,
+            })
+            .then(function(employee){
+                if(employee){
+                    var valid = employee.comparePassword(password, employee.password);
+                    if(valid) {
+                        //valid password
+                        done(null, {
+                            id : employee._id,
+                            username: employee.username,
+                            fullname : employee.fullname,
+                            // password: user.password
+                        })
+                    }else {
+                        //invalid password
+                        done(null, false)
+                    }
+                } else {
+                    //user not found
+                    done(null, false);
+                }
+            })
+            .catch(function(err){
+                done(err);
+            });
+        }));
 }

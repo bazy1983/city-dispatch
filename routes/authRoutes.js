@@ -3,9 +3,10 @@ const db = require("../models");
 
 module.exports = function (passport) {
 
+    //USER AUTHENTICATION STARTS
     router.post("/signup", function (req, res) {
         // console.log(req.body)
-        User.findOne({ username: req.body.username })
+        db.User.findOne({ username: req.body.username })
             .then(function (user) { //prevent dublicate username entries
                 if (user) {
                     res.status(500).send({ err: "user exsists!" });
@@ -26,7 +27,7 @@ module.exports = function (passport) {
             })
     })
 
-    router.post("/login", passport.authenticate("local", {
+    router.post("/login", passport.authenticate("user", {
         failureRedirect: "/",
         // successRedirect: "/profile"
     }), function (req, res) {
@@ -36,11 +37,51 @@ module.exports = function (passport) {
         // res.send("hey")
     })
 
-    router.get('/logout', function(req, res){
+    router.get('/logout', function (req, res) {
         req.logout();
         res.status(200).end();
-      });
+    });
+    //USER AUTHENTICATION ENDS
 
+    //EMPLOYEE AUTHENTICATION STARTS
+    router.post("/inspect-signup", function (req, res) {
+        // console.log(req.body)
+        db.Employee.findOne({ username: req.body.username })
+            .then(function (user) { //prevent dublicate username entries
+                if (user) {
+                    res.status(500).send({ err: "user exsists!" });
+                } else {
+                    var record = new db.Employee();
+                    record.username = req.body.username;
+                    record.fullname = req.body.fullname;
+                    record.email = req.body.email;
+                    record.password = record.hashPassword(req.body.password);
+                    record.save(function (err, user) {
+                        if (err) { res.status(500).send({ err: "db error" }) }
+                        else { res.send(user) }
+                    })
+                }
+            })
+            .catch(function (err) {
+                res.status(500).send({ err: "some error!!" });
+            })
+    })
+
+    router.post("/inspect-login", passport.authenticate("employee", {
+        failureRedirect: "/",
+        // successRedirect: "/profile"
+    }), function (req, res) {
+        res.cookie("_acc", req.user.id)
+        // console.log(res.cookie.toString())
+        res.redirect("/profile")
+        // res.send("hey")
+    })
+
+    // router.get('/logout', function (req, res) {
+    //     req.logout();
+    //     res.status(200).end();
+    // });
+    //EMPLOYEE AUTHENTICATION ENDS
 
 
     return router;

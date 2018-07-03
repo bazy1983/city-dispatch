@@ -2,31 +2,31 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import Login from "../../components/userlogin";
 import Signup from "../../components/signup";
-import "./user.css"
+//import "./user.css"
 
-class User extends Component {
+class AuthInspector extends Component {
     render() {
         return (
             <BrowserRouter>
                 <div className="backgroundImage">
                     <Route
-                        exact path="/"
+                        exact path="/inspect"
                         render={() =>
-                            <Login>
+                            <Login {...this.props}>
                                 <div className="h6 left-align">
-                                    <Link to="/forget">Forgot your password? </Link>
+                                    <Link to="/employee-forget">Forgot your password? </Link>
                                     <br />
-                                    Not a user? <Link to="/register">Please Register here...</Link>
+                                    Not a user? <Link to="/employee-register">Please Register here...</Link>
                                 </div>
                             </Login>
                         }>
                     </Route>
                     <Route
-                        exact path="/register"
+                        exact path="/employee-register"
                         render={() =>
-                            <Signup>
+                            <Signup {...this.props}>
                                 <div className="h6 left-align">
-                                    <Link to="/">Back to Login...</Link>
+                                    <Link to="/inspect">Back to Login...</Link>
                                 </div>
                             </Signup>
                         }>
@@ -37,5 +37,4 @@ class User extends Component {
     }
 }
 
-export default User;
-
+export default AuthInspector;

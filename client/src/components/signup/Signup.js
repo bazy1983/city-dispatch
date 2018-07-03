@@ -9,7 +9,7 @@ class Signup extends Component {
         return (
             <div className="valign-wrapper row login-box">
                 <div className="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
-                    <form action="/auth/signup" method="POST">
+                    <form action={this.props.signup} method="POST">
                         <div className="card-content">
                             <span className="card-title">Create New Account</span>
                             <div className="row">
