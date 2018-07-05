@@ -8,6 +8,7 @@ class AuthInspector extends Component {
     render() {
         return (
             <BrowserRouter>
+                {/* props come from app.js to set routes endpoints */}
                 <div className="backgroundImage">
                     <Route
                         exact path="/inspect"

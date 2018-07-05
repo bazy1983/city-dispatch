@@ -68,12 +68,12 @@ module.exports = function (passport) {
     })
 
     router.post("/inspect-login", passport.authenticate("employee", {
-        failureRedirect: "/",
+        failureRedirect: "/inspect",
         // successRedirect: "/profile"
     }), function (req, res) {
         res.cookie("_acc", req.user.id)
         // console.log(res.cookie.toString())
-        res.redirect("/profile")
+        res.redirect("/inspector")
         // res.send("hey")
     })
 

@@ -36,6 +36,10 @@ const TicketSchema = new Schema({
     inspectorId: {
         type : String
     },
+    assignedToInspector : {
+        type : Boolean,
+        default: false
+    },
     approved: {
         type : Boolean
     },

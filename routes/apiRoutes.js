@@ -36,4 +36,18 @@ router.get("/getWeather/:lat/:log", (req, res) => {
     })
 })
 
+//get all tickets for inspector view
+router.get("/all-tickets", (req, res)=>{
+    db.Ticket.find({
+        assignedToInspector : false
+    })
+    .then((tickets)=>{
+        res.status(200).json(tickets)
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.status(404).json({err: "something went wrong"})
+    });
+});
+
 module.exports = router

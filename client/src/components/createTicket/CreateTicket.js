@@ -5,15 +5,15 @@ import axios from "axios";
 class CreateTicket extends Component {
 
     state = {
-        userId : "",
-        length : "",
-        width : "",
-        depth : "",
-        street : "",
-        city : "",
-        state : "",
-        zip : "",
-        desc : ""
+        userId: "",
+        length: "",
+        width: "",
+        depth: "",
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        desc: ""
     }
 
     componentDidMount() {
@@ -22,7 +22,7 @@ class CreateTicket extends Component {
         var parts = value.split("; _acc=");
         if (parts.length === 2) {
             let id = parts.pop().split(";").shift().replace("j%3A%22", "").replace("%22", "");
-            this.setState({userId : id})
+            this.setState({ userId: id })
         }
 
     }
@@ -49,7 +49,7 @@ class CreateTicket extends Component {
     onChangeHandler = (e) => {
         let val = e.target.value;
         let key = e.target.attributes.id.value;
-        this.setState({[key] : val})
+        this.setState({ [key]: val })
     }
 
     onSubmitHandler = (e) => {
@@ -73,10 +73,10 @@ class CreateTicket extends Component {
             contentType: false,
             cache: false,
             processData: false
-          })
-          .then((result)=>{
-            console.log(result)
-          });
+        })
+            .then((result) => {
+                console.log(result)
+            });
         // $.ajax({
         //     url: url,
         //     type: method,
@@ -94,9 +94,9 @@ class CreateTicket extends Component {
         return (
             <div className="row container">
                 <div>
-                    <h3 className= "left-align">Report a pothole</h3>
+                    <h3 className="left-align">Report a pothole</h3>
                 </div>
-                <form id="ticketForm" className="card hoverable" onSubmit = {this.onSubmitHandler} encType='multipart/form-data'>
+                <form id="ticketForm" className="card hoverable" onSubmit={this.onSubmitHandler} encType='multipart/form-data'>
                     <div className="row">
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">border_vertical</i>
@@ -105,42 +105,54 @@ class CreateTicket extends Component {
                         </div>
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">border_horizontal</i>
-                            <input id="width" required type="number" className="validate" onChange={this.onChangeHandler}/>
+                            <input id="width" required type="number" className="validate" onChange={this.onChangeHandler} />
                             <label htmlFor="width">Approximate width (ft)</label>
                         </div>
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">border_outer</i>
-                            <input id="depth" required type="number" className="validate" onChange={this.onChangeHandler}/>
+                            <input id="depth" required type="number" className="validate" onChange={this.onChangeHandler} />
                             <label htmlFor="depth">Approximate depth (ft)</label>
                         </div>
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">timeline</i>
-                            <input id="street" required type="text" className="validate" onChange={this.onChangeHandler}/>
+                            <input id="street" required type="text" className="validate" onChange={this.onChangeHandler} />
                             <label htmlFor="street">Street Address</label>
                         </div>
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">location_city</i>
-                            <input id="city" required type="text" className="validate" onChange={this.onChangeHandler}/>
+                            <input id="city" required type="text" className="validate" onChange={this.onChangeHandler} />
                             <label htmlFor="city">City</label>
                         </div>
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">domain</i>
-                            <input id="state" required type="text" className="validate" onChange={this.onChangeHandler}/>
+                            <input id="state" required type="text" className="validate" onChange={this.onChangeHandler} />
                             <label htmlFor="state">State</label>
                         </div>
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">filter_9_plus</i>
-                            <input id="zip" required type="number" className="validate" onChange={this.onChangeHandler}/>
+                            <input id="zip" required type="number" className="validate" onChange={this.onChangeHandler} />
                             <label htmlFor="zip">ZIP code</label>
                         </div>
-                        <div className="input-field col l6 s12">
+                        {/* <div className="input-field col l6 s12">
                             <i className="material-icons prefix">photo</i>
                             <input name= "file" id="upload" required type="file" className="validate" />
                             <label htmlFor="upload"></label>
+                        </div> */}
+
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>File</span>
+                                <input name="file" type="file" />
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" />
+                            </div>
                         </div>
+
                         <div className="input-field col l12 s12">
                             <i className="material-icons prefix">description</i>
-                            <input id="desc" required type="text" className="validate" onChange={this.onChangeHandler}/>
+                            {/* <input id="desc" required type="text" className="validate" onChange={this.onChangeHandler}/> */}
+                            <textarea id="desc" class="materialize-textarea" onChange={this.onChangeHandler}></textarea>
                             <label htmlFor="desc">General Description</label>
                         </div>
 
