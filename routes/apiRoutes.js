@@ -37,46 +37,50 @@ router.get("/getWeather/:lat/:log", (req, res) => {
     })
 })
 
-// function handle what ticket to send
-let processAndSendTicket = (ticket, res)=>{
-    console.log(Array.isArray(ticket))
-    if (!Array.isArray(ticket)){
-        if (ticket != null) {
-            res.status(200).json(ticket)
-        }
-    }else{
-        res.status(200).json(ticket)
-    }
-}
-let sendError = (err)=>{
-    res.status(404).send({err: "could not process request"})
-    console.log(err)
-}
+// // function handle what ticket to send
+// let processAndSendTicket = (ticket, res)=>{
+//     console.log(Array.isArray(ticket))
+//     if (!Array.isArray(ticket)){
+//         if (ticket != null) {
+//             res.status(200).json(ticket)
+//         }
+//     }else{
+//         res.status(200).json(ticket)
+//     }
+// }
+// let sendError = (err)=>{
+//     res.status(404).send({err: "could not process request"})
+//     console.log(err)
+// }
 
 //get open ticket for inspector view OR get all ticket
 router.get("/all-tickets/:inspectorId", (req, res)=>{
-    console.log(req.params.inspectorId)
     db.Ticket.findOne({
         inspecterOpen : true,// ticket still open
         inspectorId : req.params.inspectorId,
         inspectDate : moment().format("MM/DD/YYYY")  
     })
     .then((openTicket)=>{
-        processAndSendTicket(openTicket, res)
+        // if open ticket is found
+        if(openTicket){
+
+            res.status(200).json(openTicket)
+        } else {
+
+            db.Ticket.find({
+                assignedToInspector : false
+            })
+            .then((tickets)=>{
+                res.status(200).json(tickets)
+            })
+            .catch((err)=>{
+                sendError(err);
+            });
+        }
     })
-    .catch((err)=> {
+    .catch((err)=> { //catch for findOne
         sendError(err)
     })
-
-    db.Ticket.find({
-        assignedToInspector : false
-    })
-    .then((tickets)=>{
-        processAndSendTicket(tickets, res)
-    })
-    .catch((err)=>{
-        sendError(err);
-    });
 
 });
 
@@ -96,8 +100,6 @@ router.get("/getEmployee/:id", (req, res)=>{
 
 //inspector dispatch job
 router.put("/dispatchOne", (req, res)=>{
-    console.log(req.body)
-    console.log("=========")
     db.Ticket.findByIdAndUpdate(req.body.ticketId, {
         assignedToInspector : true,
         inspectorId : req.body.inspectorId,
@@ -107,8 +109,8 @@ router.put("/dispatchOne", (req, res)=>{
     })
     .then((updatedTicket)=>{
         console.log(updatedTicket)
+        res.send("okay");
     })
-    res.send("okay");
 })
 
 module.exports = router

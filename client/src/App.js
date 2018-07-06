@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 import './App.css';
+import StageBuilder from "./pages/stageBuilder";
 import User from "./pages/authUser";
 import UserDash from "./pages/userDash";
 import UathInspector from "./pages/authInspector";
@@ -16,6 +17,7 @@ class App extends Component {
           <Route exact path="/profile" component={UserDash} />
           <Route exact path="/inspect" render={()=><UathInspector login="/auth/inspect-login" signup="/auth/inspect-signup"/>}/>
           <Route exact path="/inspector" component={Inspector}/>
+          <Route exact path="/stage-builder" component={StageBuilder}/>
         </div>
       </BrowserRouter>
     );

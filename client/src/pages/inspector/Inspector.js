@@ -6,14 +6,15 @@ import "./inspector.css";
 import InspectTickets from "../../components/inspectTickets";
 import Navbar from "../../components/inspector-navbar";
 import InspectorDispatch from "../../components/inspector-dispatch";
+import Loader from "../../components/loader";
 
 class Inspector extends Component {
 
     state = {
         tickets: [],
-        oneTicket: {},
+        oneTicket: "",
         inspector: {},
-        invalidTicketBtn: true
+        loading : true
     }
 
     componentDidMount() {
@@ -39,18 +40,22 @@ class Inspector extends Component {
                 })
         }
 
-        //get tickets
+        //get open ticket or all non dispatched tickets
         API.getTickets(id)
             .then((tickets) => {
+                console.log(tickets.data)
                 //if ticket is open tickets var is object, else tickets var is array
-                if (Array.isArray(tickets)) {
-                    this.setState({ tickets: tickets.data, ticket: {} })
-                    console.log("array")
+                if (Array.isArray(tickets.data)) {
+                    console.log("not dispatched");
+                    this.setState({ tickets: tickets.data, oneTicket: "" });
+                    
                 } else {
-                    this.setState({ ticket: tickets, tickets: [] })
-                    console.log("object")
+                    console.log("dispatched")
+                    this.setState({ tickets: [], oneTicket: tickets.data })
+                    
                 }
 
+                this.setState({loading : false})
             })
 
     }
@@ -73,6 +78,7 @@ class Inspector extends Component {
                 <Navbar
                     fullname={this.state.inspector.fullname}
                 />
+                {this.state.loading?<Loader/>:null}
                 {this.state.tickets ?
                     <ul className="collapsible popout ticket" >
                         {this.state.tickets.map((ticket) => {
@@ -97,10 +103,8 @@ class Inspector extends Component {
                     : 
                     null
                     }
-                {this.state.ticket?
-                    <InspectorDispatch
-                    invalidTicketBtn = {this.state.invalidTicketBtn}
-                    />
+                {this.state.oneTicket?
+                    <InspectorDispatch/>
                 :
                 null
                 }

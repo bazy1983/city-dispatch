@@ -2,5 +2,6 @@
 module.exports = {
     User : require("./User"),
     Ticket : require("./ticket"),
-    Employee : require("./Employee")
+    Employee : require("./Employee"),
+    Workflow : require("./Workflow")
 }
