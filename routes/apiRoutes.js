@@ -2,6 +2,7 @@ const router = require("express").Router();
 const db = require("../models");
 const keys = require("../config/keys");
 const request = require("request");
+const moment = require ("moment");
 
 router.get("/getUser/:id", (req, res) => {
     // console.log(req.params.id)
@@ -36,18 +37,78 @@ router.get("/getWeather/:lat/:log", (req, res) => {
     })
 })
 
-//get all tickets for inspector view
-router.get("/all-tickets", (req, res)=>{
+// function handle what ticket to send
+let processAndSendTicket = (ticket, res)=>{
+    console.log(Array.isArray(ticket))
+    if (!Array.isArray(ticket)){
+        if (ticket != null) {
+            res.status(200).json(ticket)
+        }
+    }else{
+        res.status(200).json(ticket)
+    }
+}
+let sendError = (err)=>{
+    res.status(404).send({err: "could not process request"})
+    console.log(err)
+}
+
+//get open ticket for inspector view OR get all ticket
+router.get("/all-tickets/:inspectorId", (req, res)=>{
+    console.log(req.params.inspectorId)
+    db.Ticket.findOne({
+        inspecterOpen : true,// ticket still open
+        inspectorId : req.params.inspectorId,
+        inspectDate : moment().format("MM/DD/YYYY")  
+    })
+    .then((openTicket)=>{
+        processAndSendTicket(openTicket, res)
+    })
+    .catch((err)=> {
+        sendError(err)
+    })
+
     db.Ticket.find({
         assignedToInspector : false
     })
     .then((tickets)=>{
-        res.status(200).json(tickets)
+        processAndSendTicket(tickets, res)
     })
     .catch((err)=>{
-        console.log(err)
-        res.status(404).json({err: "something went wrong"})
+        sendError(err);
     });
+
 });
+
+//get employee from cookie data
+router.get("/getEmployee/:id", (req, res)=>{
+    db.Employee.findById(req.params.id)
+    .then((employee)=>{
+        res.status(200).json({
+            id : employee._id,
+            fullname : employee.fullname
+        })
+    })
+    .catch((err)=>{
+        res.status(404).json({err: "no such employee"})
+    })
+})
+
+//inspector dispatch job
+router.put("/dispatchOne", (req, res)=>{
+    console.log(req.body)
+    console.log("=========")
+    db.Ticket.findByIdAndUpdate(req.body.ticketId, {
+        assignedToInspector : true,
+        inspectorId : req.body.inspectorId,
+        inspectStage: 1,
+        inspectDate : moment().format("MM/DD/YYYY"),
+        inspecterOpen : true
+    })
+    .then((updatedTicket)=>{
+        console.log(updatedTicket)
+    })
+    res.send("okay");
+})
 
 module.exports = router

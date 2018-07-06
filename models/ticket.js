@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const TicketSchema = new Schema({
-    userId: {
+    userId: { //user part
         type : String
     },
     length: {
@@ -33,26 +33,41 @@ const TicketSchema = new Schema({
     imgBefore: {
         type: String
     },
-    inspectorId: {
+    inspectorId: { //inspector part
         type : String
     },
     assignedToInspector : {
         type : Boolean,
         default: false
     },
+    inspectStage : {
+        type: Number,
+        default: 0
+    },
+    inspecterOpen: {
+        type : Boolean,
+        default : false
+    },
+    inspectDate : { 
+        type : String
+    },
     approved: {
         type : Boolean
     },
-    dispatchable: {
+    dispatchable: { 
         type: Boolean,
         default: false
     },
-    teamId: {
+    teamId: { // deispatch team part
         type : String
     },
     dispatched : {
         type : Boolean,
         default: false
+    },
+    dispatchStage : {
+        type : Number,
+        default : 0
     }
 },{
     timestamps : true

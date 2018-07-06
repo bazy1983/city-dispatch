@@ -1,0 +1,18 @@
+.btnToRight {
+    position: absolute;
+    transform: translateY(-7px);
+    right: 36px;
+}
+
+.fadeOut{
+    animation: 1s fade forwards;
+}
+
+@keyframes fade {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
