@@ -80,11 +80,22 @@ class Inspector extends Component {
     nextStep = (step)=>{
         // let next = step + 1;
         let notes = document.querySelector("#narratives");
-        if (notes) console.log(notes.value);
-        console.log(notes)
-        API.getStage(step, 1)
+        if (notes) {
+            console.log(notes);
+            API.addNarratives(notes.value, this.state.oneTicket._id);
+        }
+
+        API.getStage(step, 1, this.state.oneTicket._id)
         .then((instructions)=>{
             this.setState({stage : instructions.data})
+        })
+    }
+
+    closeTicket = ()=> {
+        API.closeOut(this.state.oneTicket._id, 1)
+        .then(()=>{
+            this.setState({loading : true, oneTicket : ""})
+            this.componentDidMount()
         })
     }
 
@@ -124,7 +135,7 @@ class Inspector extends Component {
                     null
                     }
                 {this.state.oneTicket?
-                    <InspectorDispatch dismissTicket={this.dismissTicket} nextStep={this.nextStep} {...this.state.stage} />
+                    <InspectorDispatch closeTicket={this.closeTicket} dismissTicket={this.dismissTicket} nextStep={this.nextStep} {...this.state.stage} />
                 :
                 null
                 }

@@ -22,7 +22,7 @@ class InspectorDispatch extends Component {
                                             <div>
                                                 <div className="input-field col s12">
                                                     <textarea id="narratives" className="materialize-textarea"></textarea>
-                                                    <label for="narratives">Textarea</label>
+                                                    <label htmlFor="narratives">Textarea</label>
                                                 </div>
                                             </div>
                                             : null}
@@ -42,7 +42,7 @@ class InspectorDispatch extends Component {
                                         <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber-1)}>Back</a>
                                     :null}
                                     {this.props.final ?
-                                        <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber)}>Close</a>
+                                        <a href="#" onClick={this.props.closeTicket}>Close</a>
                                         :
                                         <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber+1)}>Next</a>
                                     }

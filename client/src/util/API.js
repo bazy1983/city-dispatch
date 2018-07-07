@@ -16,10 +16,11 @@ export default {
             inspectorId : inspectorId
         })
     },
-    getStage : function(stage, employee){
+    getStage : function(stage, employee, ticketId){
         return axios.get("/api/stage",{params: {
             flowFor : employee,
-            stepNumber : stage
+            stepNumber : stage,
+            id : ticketId
         }})
     },
     makeWorkflowStep: function(data){
@@ -30,6 +31,18 @@ export default {
             contentType: false,
             cache: false,
             processData: false
+        })
+    },
+    closeOut : function(ticketId, employee){
+        return axios.put("/api/closeTicket", {
+            id : ticketId,
+            employee : employee
+        } )
+    },
+    addNarratives: function(notes, ticketId){
+        return axios.put("/api/narratives", {
+            notes : notes,
+            id : ticketId
         })
     }
 }

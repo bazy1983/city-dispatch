@@ -116,7 +116,10 @@ router.put("/dispatchOne", (req, res)=>{
 //get current instructions for dispatched job
 router.get("/stage", (req, res)=>{
     // console.log(req.query)
-    db.Workflow.findOne({...req.query})
+    db.Workflow.findOne({
+        flowFor : req.query.flowFor,
+        stepNumber : req.query.stepNumber
+    })
     .then((instructions)=>{
         // console.log(instructions)
         res.status(200).json(instructions)
@@ -124,6 +127,35 @@ router.get("/stage", (req, res)=>{
     .catch((err)=>{
         console.log(err);
         res.status(404).end()
+    })
+    db.Ticket.findByIdAndUpdate(req.query.id, {
+        inspectStage : req.query.stepNumber
+    })
+    .then((data)=>{
+        // console.log(data)
+    })
+})
+
+//inspector close out ticket
+router.put("/closeTicket", (req, res)=>{
+    if (req.body.employee === 1 ){
+        db.Ticket.findByIdAndUpdate(req.body.id, {
+            approved : true,
+            dispatchable : true,
+            inspecterOpen: false
+        })
+        .then(()=>{
+            res.send("okay")
+        })
+    }
+})
+
+router.put("/narratives", (req,res)=>{
+    db.Ticket.findByIdAndUpdate(req.body.id, {
+        inspectNarratives : req.body.notes
+    })
+    .then((ticket)=>{
+        res.status(200).end();
     })
 })
 
