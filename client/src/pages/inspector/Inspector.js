@@ -14,7 +14,8 @@ class Inspector extends Component {
         tickets: [],
         oneTicket: "",
         inspector: {},
-        loading : true
+        loading : true,
+        stage : "",
     }
 
     componentDidMount() {
@@ -40,18 +41,22 @@ class Inspector extends Component {
                 })
         }
 
-        //get open ticket or all non dispatched tickets
+        //get open ticket or all non dispatched tickets, id = employee id
         API.getTickets(id)
             .then((tickets) => {
                 console.log(tickets.data)
                 //if ticket is open tickets var is object, else tickets var is array
                 if (Array.isArray(tickets.data)) {
-                    console.log("not dispatched");
+                    // console.log("not dispatched");
                     this.setState({ tickets: tickets.data, oneTicket: "" });
                     
                 } else {
-                    console.log("dispatched")
-                    this.setState({ tickets: [], oneTicket: tickets.data })
+                    // console.log("dispatched")
+                    API.getStage(tickets.data.inspectStage, 1) //1 represent inspector
+                    .then((instructions)=>{  
+                        console.log(instructions.data)
+                        this.setState({ tickets: [], oneTicket: tickets.data, stage : instructions.data })
+                    })
                     
                 }
 
@@ -70,6 +75,21 @@ class Inspector extends Component {
         setTimeout(() => {
             this.componentDidMount();
         }, 800)
+    }
+
+    nextStep = (step)=>{
+        // let next = step + 1;
+        let notes = document.querySelector("#narratives");
+        if (notes) console.log(notes.value);
+        console.log(notes)
+        API.getStage(step, 1)
+        .then((instructions)=>{
+            this.setState({stage : instructions.data})
+        })
+    }
+
+    dismissTicket = ()=> {
+
     }
 
     render() {
@@ -104,7 +124,7 @@ class Inspector extends Component {
                     null
                     }
                 {this.state.oneTicket?
-                    <InspectorDispatch/>
+                    <InspectorDispatch dismissTicket={this.dismissTicket} nextStep={this.nextStep} {...this.state.stage} />
                 :
                 null
                 }

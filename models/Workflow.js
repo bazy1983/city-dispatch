@@ -6,6 +6,9 @@ const WorkflowSchema = new Schema({
     stepNumber : {
         type : Number
     },
+    headline : {
+        type : String
+    },
     flowFor : {
         type : String
     },

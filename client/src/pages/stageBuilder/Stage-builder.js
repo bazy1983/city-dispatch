@@ -1,17 +1,35 @@
 import React, { Component } from "react";
+import API from "../../util/API";
+import axios from "axios";
 
 class StageBuilder extends Component {
 
-    onSubmiHandler = (e)=> {
+    onSubmiHandler = (e) => {
         e.preventDefault();
-        console.log("okay")
+        let workflow = document.getElementById("workflow");
+        let pageData = new FormData(workflow);
+        pageData.append("flowFor", document.querySelector(".browser-default").value);
+        pageData.append("stepNumber", document.querySelector("#step").value);
+        pageData.append("headline", document.querySelector("#header").value);
+        pageData.append("desc", document.querySelector("#textarea1").value);
+        pageData.append("final", document.querySelector("#final").checked);
+        
+        axios({
+            url : "/withFile/make-workflow-step",
+            method : "post",
+            data: pageData,
+            contentType: false,
+            cache: false,
+            processData: false
+        })
     }
+
 
     render() {
         return (
-            <div className="valign-wrapper row login-box">
-                <div className="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
-                    <form action={this.props.signup} method="POST">
+            <div className="valign-wrapper row">
+                <div className="col card hoverable s10 pull-s1 m10 pull-m1 l10 pull-l1">
+                    <form action="/withFile/make-workflow-step" method="POST" id="workflow" encType="multipart/form-data">
                         <div className="card-content">
                             <span className="card-title">Add new Stage</span>
                             <div className="row">
@@ -19,7 +37,7 @@ class StageBuilder extends Component {
                                 <div className="file-field input-field">
                                     <div className="btn">
                                         <span>Appropriate Image</span>
-                                        <input type="file" style={{top: "190px",width: "48%",height: "15%"}}/>
+                                        <input type="file" name="file"/>
                                     </div>
                                     <div className="file-path-wrapper">
                                         <input className="file-path validate" type="text" />
@@ -32,7 +50,7 @@ class StageBuilder extends Component {
                                         <option value="1">Inspector</option>
                                         <option value="2">Road Worker</option>
                                     </select>
-                                    
+
                                 </div>
 
                                 <div className="input-field col s12">
@@ -41,14 +59,19 @@ class StageBuilder extends Component {
                                 </div>
 
                                 <div className="input-field col s12">
-                                    <label htmlFor="desc">Description</label>
-                                    <input type="text" className="validate" name="desc" id="desc" />
+                                    <label htmlFor="header">header</label>
+                                    <input type="text" className="validate" name="header" id="header" />
+                                </div>
+
+                                <div className="input-field col s12">
+                                    <textarea id="textarea1" className="materialize-textarea"></textarea>
+                                    <label htmlFor="textarea1">Instructions</label>
                                 </div>
 
                                 <div className="switch">
                                     <label>
                                         Not Final
-                                    <input type="checkbox" />
+                                    <input type="checkbox" id="final"/>
                                         <span className="lever"></span>
                                         Final Step
                                     </label>

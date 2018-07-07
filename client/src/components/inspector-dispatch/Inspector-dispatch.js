@@ -1,10 +1,8 @@
 import React, { Component } from "react";
+import { differenceInCalendarDays } from "date-fns";
 
 class InspectorDispatch extends Component {
 
-    state = {
-        invalidTicketBtn : false
-    }
 
     render() {
         return (
@@ -15,17 +13,39 @@ class InspectorDispatch extends Component {
                             <div className="card-content white-text left-align">
                                 <span className="card-title">Dispatch Work Flow</span>
                                 <hr />
+                                <h4>{this.props.headline}</h4>
                                 <div className="row">
-                                    <div className="col s12 m9">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima, velit laudantium? Placeat dolorem quae deserunt rem autem impedit necessitatibus maiores natus quod, neque error porro pariatur odio blanditiis laboriosam laudantium.</div>
-                                    <div className="col s12 m3">image goes here</div>
+                                    <div className="col s12 m10" style={{ whiteSpace: "pre-line" }}>
+                                        {this.props.desc}
+
+                                        {this.props.stepNumber === 4 ?
+                                            <div>
+                                                <div className="input-field col s12">
+                                                    <textarea id="narratives" className="materialize-textarea"></textarea>
+                                                    <label for="narratives">Textarea</label>
+                                                </div>
+                                            </div>
+                                            : null}
+                                    </div>
+                                    <div className="col s12 m2">
+                                        <img src={`/withfile/image/${this.props.imgName}`} alt="" width="130" height="130" />
+                                    </div>
                                 </div>
                             </div>
                             <div className="card-action">
                                 <div className="right-align">
-                                    {this.props.invalidTicketBtn ?
-                                        <a href="#" >Dismiss Ticket</a>
-                                        : null}
-                                    <a href="#" >Next</a>
+                                    {this.props.stepNumber === 3 ?
+                                        <a href="#" onClick={this.props.dismissTicket} >Dismiss Ticket</a>
+                                        : null
+                                    }
+                                    {this.props.stepNumber > 1 ?
+                                        <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber-1)}>Back</a>
+                                    :null}
+                                    {this.props.final ?
+                                        <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber)}>Close</a>
+                                        :
+                                        <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber+1)}>Next</a>
+                                    }
 
                                 </div>
                             </div>

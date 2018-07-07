@@ -15,5 +15,21 @@ export default {
             ticketId : ticketId,
             inspectorId : inspectorId
         })
+    },
+    getStage : function(stage, employee){
+        return axios.get("/api/stage",{params: {
+            flowFor : employee,
+            stepNumber : stage
+        }})
+    },
+    makeWorkflowStep: function(data){
+        return axios({
+            url : "/withFile/make-workflow-step",
+            method : "post",
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false
+        })
     }
 }

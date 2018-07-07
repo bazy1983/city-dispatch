@@ -60,7 +60,7 @@ const upload = multer({ storage });
 //middleware creates req.file object after it gets uploaded to db
 router.post("/reportTicket", upload.single("file"), function(req, res){
     let ticket = req.body;
-    console.log(req.body)
+    // console.log(req.body)
     ticket.imgBefore = req.file.filename //added the constructed file name to the req.body object
     db.Ticket.create(ticket) 
     .then(function(){
@@ -79,6 +79,16 @@ router.get("/files", function(req, res){
       layout : "addProject.handlebars",
       projects : results
     })
+  })
+})
+
+router.post("/make-workflow-step", upload.single("file"), (req,res)=>{
+  let workflowStep = req.body;
+  workflowStep.imgName = req.file.filename;
+  console.log(workflowStep)
+  db.Workflow.create(workflowStep)
+  .then(()=>{
+    res.send("okay")
   })
 })
 

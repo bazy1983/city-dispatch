@@ -44,6 +44,9 @@ const TicketSchema = new Schema({
         type: Number,
         default: 0
     },
+    inspectNarratives: {
+        type : String
+    },
     inspecterOpen: {
         type : Boolean,
         default : false

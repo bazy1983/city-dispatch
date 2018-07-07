@@ -108,8 +108,22 @@ router.put("/dispatchOne", (req, res)=>{
         inspecterOpen : true
     })
     .then((updatedTicket)=>{
-        console.log(updatedTicket)
+        // console.log(updatedTicket)
         res.send("okay");
+    })
+})
+
+//get current instructions for dispatched job
+router.get("/stage", (req, res)=>{
+    // console.log(req.query)
+    db.Workflow.findOne({...req.query})
+    .then((instructions)=>{
+        // console.log(instructions)
+        res.status(200).json(instructions)
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(404).end()
     })
 })
 
