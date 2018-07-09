@@ -33,6 +33,12 @@ const TicketSchema = new Schema({
     imgBefore: {
         type: String
     },
+    notify : {
+        type : Boolean
+    },
+    notifyType : {
+        type : String
+    },
     inspectorId: { //inspector part
         type : String
     },
@@ -70,7 +76,17 @@ const TicketSchema = new Schema({
     },
     dispatchStage : {
         type : Number,
-        default : 0
+        default : 1
+    },
+    imgAfter: {
+        type: String
+    },
+    workerNarratives : {
+        type: String
+    },
+    closed: {
+        type : Boolean,
+        default : false
     }
 },{
     timestamps : true

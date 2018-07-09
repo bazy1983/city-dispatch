@@ -52,5 +52,11 @@ export default {
             notes : notes,
             id : ticketId
         })
+    },// Start of city worker methods
+    dispatchJob: function(employeeId){
+        return axios.get("/api/getOneJob/"+employeeId)
+    },
+    checkDispatch: function(employeeId){
+        return axios.get("/api/check-dispatch/" + employeeId)
     }
 }

@@ -172,4 +172,39 @@ router.put("/narratives", (req,res)=>{
     })
 })
 
+//city worker get one job
+router.get("/getOneJob/:employeeId", (req, res)=>{
+    db.Ticket.findOne({
+        dispatchable : true,
+        dispatched : false
+    })
+    .then((job)=>{
+        db.Ticket.findByIdAndUpdate(job._id, {
+            teamId : req.params.employeeId,
+            dispatched: true
+        })
+        
+        res.status(200).json(job);
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(404).json({err: "no more jobs to dispatch"})
+    })
+})
+
+router.get("/check-dispatch/:id", (req, res)=>{
+    db.Ticket.findOne({
+        teamId: req.params.id,
+        closed : false
+    })
+    .then ((job)=>{
+
+        res.json(job)
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.status(404).json({err: "some err!!"})
+    })
+})
+
 module.exports = router

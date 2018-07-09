@@ -13,7 +13,7 @@ class InspectTickets extends Component {
                         <i className="material-icons">list</i>
                          <span>Ticket: &nbsp;{this.props.street}, {this.props.city}, {this.props.state}, {this.props.zip}</span>
 
-                    <span className="waves-effect waves-light btn btnToRight" onClick={this.props.dispatchJob.bind(this, this.props.ticketId)}>Dispatch Job</span>
+                    <span className="waves-effect waves-light btn btnToRight blue" onClick={this.props.dispatchJob.bind(this, this.props.ticketId)}>Dispatch Job</span>
                     
                 </div>
                 <div className="collapsible-body">
