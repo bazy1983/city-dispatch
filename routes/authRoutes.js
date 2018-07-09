@@ -56,6 +56,7 @@ module.exports = function (passport) {
                     record.fullname = req.body.fullname;
                     record.email = req.body.email;
                     record.password = record.hashPassword(req.body.password);
+                    record.role = 10;
                     record.save(function (err, user) {
                         if (err) { res.status(500).send({ err: "db error" }) }
                         else { res.send(user) }
@@ -74,14 +75,32 @@ module.exports = function (passport) {
         res.cookie("_acc", req.user.id)
         // console.log(res.cookie.toString())
         res.redirect("/inspector")
-        // res.send("hey")
+        
     })
 
-    // router.get('/logout', function (req, res) {
-    //     req.logout();
-    //     res.status(200).end();
-    // });
-    //EMPLOYEE AUTHENTICATION ENDS
+    router.post("/work-login", passport.authenticate("employee", {
+        failureRedirect: "/work",
+        // successRedirect: "/profile"
+    }), function (req, res) {
+        res.cookie("_acc", req.user.id)
+        // console.log(res.cookie.toString())
+        res.redirect("/city-worker")
+        
+    })
+
+    router.get('/authenticate-person',checkAuthentication,function(req,res){
+        res.status(200).json({redirect : false});
+    });
+    function checkAuthentication(req,res,next){
+        if(req.isAuthenticated()){
+            // console.log("authenticated")
+            //req.isAuthenticated() will return true if user is logged in
+            next();
+        } else{
+            // console.log("not authenticated")
+            res.json({redirect : "/"})
+        }
+    }
 
 
     return router;

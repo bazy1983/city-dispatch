@@ -4,7 +4,7 @@ import API from "../../util/API";
 import "./inspector.css";
 
 import InspectTickets from "../../components/inspectTickets";
-import Navbar from "../../components/inspector-navbar";
+import Navbar from "../../components/employee-navbar";
 import InspectorDispatch from "../../components/inspector-dispatch";
 import Loader from "../../components/loader";
 
@@ -81,7 +81,6 @@ class Inspector extends Component {
         // let next = step + 1;
         let notes = document.querySelector("#narratives");
         if (notes) {
-            console.log(notes);
             API.addNarratives(notes.value, this.state.oneTicket._id);
         }
 
@@ -100,7 +99,11 @@ class Inspector extends Component {
     }
 
     dismissTicket = ()=> {
-
+        API.dismiss(this.state.oneTicket._id)
+        .then(()=>{
+            this.setState({loading : true, oneTicket : ""})
+            this.componentDidMount()
+        })
     }
 
     render() {

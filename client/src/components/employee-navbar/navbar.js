@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import "./navbar.css";
 
 
 class Navbar extends Component {
     render() {
         return (
-            <nav>
+            <nav className="indigo darken-4">
                 <div className="nav-wrapper">
-                    <a href="#" className="brand-logo center">Logo</a>
+                    <img id="logo" src="./images/pothole.png" alt="pothole patchers"/>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
 
                         <div className="chip dropdown-trigger" data-target='dropdown1'>

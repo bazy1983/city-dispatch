@@ -11,13 +11,13 @@ class AuthInspector extends Component {
                 {/* props come from app.js to set routes endpoints */}
                 <div className="backgroundImage">
                     <Route
-                        exact path="/inspect"
+                        exact path="/work"
                         render={() =>
-                            <Login {...this.props} role="1">
+                            <Login {...this.props} role="3">
                                 <div className="h6 left-align">
                                     <Link to="/employee-forget">Forgot your password? </Link>
                                     <br />
-                                    Register Worker <Link to="/employee-register">HERE</Link>
+                                    
                                 </div>
                             </Login>
                         }>
@@ -27,7 +27,7 @@ class AuthInspector extends Component {
                         render={() =>
                             <Signup {...this.props}>
                                 <div className="h6 left-align">
-                                    <Link to="/inspect">Back to Login...</Link>
+                                    <Link to="/work">Back to Login...</Link>
                                 </div>
                             </Signup>
                         }>

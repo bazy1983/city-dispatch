@@ -4,11 +4,21 @@ import UserProfile from "../../components/userProfile";
 import CityAnnounce from "../../components/userProfile-Announce";
 import CreateTicket from "../../components/createTicket/CreateTicket";
 import axios from "axios";
+import API from "../../util/API";
 
 
 class UserDash extends Component {
     state = {
         weather: ""
+    }
+    
+    componentWillMount() {
+        API.authenticate()
+        .then((check)=>{
+            if(check.data.redirect){
+                window.location = check.data.redirect;
+            }
+        })
     }
 
     componentDidMount() {

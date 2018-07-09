@@ -47,9 +47,14 @@ module.exports = function(passport) {
     }));
 
         //local strategy to authinticate user accounts
-        passport.use("employee", new localStrategy(function(username, password, done){
+        passport.use("employee", new localStrategy({
+            passReqToCallback: true
+        },
+        function(req, username, password, done){
+            // console.log(req.body)
             db.Employee.findOne({
                 username : username,
+                role : req.body.roleId
             })
             .then(function(employee){
                 if(employee){

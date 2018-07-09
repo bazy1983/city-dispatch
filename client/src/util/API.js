@@ -1,6 +1,9 @@
 import axios from "axios";
 
 export default {
+    authenticate: function() {
+        return axios.get("/auth/authenticate-person")
+    },
     getUser : function(id) {
         return axios.get("/api/getUser/" + id);
     },
@@ -31,6 +34,11 @@ export default {
             contentType: false,
             cache: false,
             processData: false
+        })
+    },
+    dismiss : function(ticketId){
+        return axios.put("api/dismiss-ticket", {
+            id : ticketId
         })
     },
     closeOut : function(ticketId, employee){

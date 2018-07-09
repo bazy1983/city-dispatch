@@ -146,8 +146,21 @@ router.put("/closeTicket", (req, res)=>{
         })
         .then(()=>{
             res.send("okay")
+            //ADD USER REWARDS
         })
     }
+})
+
+router.put("/dismiss-ticket", (req, res)=>{
+    db.Ticket.findByIdAndUpdate(req.body.id, {
+        approved : false,
+        dispatchable : false,
+        inspecterOpen: false
+    })
+    .then(()=>{
+        res.send("okay")
+        //punish user!!
+    })
 })
 
 router.put("/narratives", (req,res)=>{

@@ -6,6 +6,7 @@ class Login extends Component {
         return (
             <div className="valign-wrapper row login-box">
                 <div className="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+                    {/* endpoint comes from app.js */}
                     <form action={this.props.login} method="POST">
                         <div className="card-content">
                             <span className="card-title">Please Login</span>
@@ -17,6 +18,7 @@ class Login extends Component {
                                 <div className="input-field col s12">
                                     <label htmlFor="password">Password </label>
                                     <input type="password" className="validate" name="password" id="password" />
+                                    <input type="hidden" id="custId" name="roleId" value={this.props.role}/>
                                 </div>
                             </div>
                         </div>
