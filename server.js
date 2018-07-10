@@ -4,9 +4,11 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+
 //requiring passport and dependencies
 const passport = require("passport");
 const session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 
 //run passport with local strategy
@@ -37,7 +39,7 @@ app.use(session({
   secret : "thesecret",
   saveUninitialized: false,
   resave: false,
-  // store : user,
+  store : user,
   cookie : {
     httpOnly : false,
   }
