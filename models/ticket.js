@@ -74,6 +74,9 @@ const TicketSchema = new Schema({
         type : Boolean,
         default: false
     },
+    dispatchDate: {
+        type : String
+    },
     dispatchStage : {
         type : Number,
         default : 1

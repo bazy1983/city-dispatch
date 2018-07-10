@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const db = require("../models");
-const keys = require("../config/keys");
+const keys = "6c19e66fe2921d2b074b34768fb253b6"
 const request = require("request");
 const moment = require ("moment");
 
@@ -174,16 +174,15 @@ router.put("/narratives", (req,res)=>{
 
 //city worker get one job
 router.get("/getOneJob/:employeeId", (req, res)=>{
-    db.Ticket.findOne({
+    console.log(req.params.employeeId)
+    db.Ticket.findOneAndUpdate({
         dispatchable : true,
         dispatched : false
+    }, {
+        teamId : req.params.employeeId,
+        dispatched: true
     })
     .then((job)=>{
-        db.Ticket.findByIdAndUpdate(job._id, {
-            teamId : req.params.employeeId,
-            dispatched: true
-        })
-        
         res.status(200).json(job);
     })
     .catch((err)=>{
@@ -193,12 +192,13 @@ router.get("/getOneJob/:employeeId", (req, res)=>{
 })
 
 router.get("/check-dispatch/:id", (req, res)=>{
+    // console.log(req.params.id)
     db.Ticket.findOne({
         teamId: req.params.id,
         closed : false
     })
     .then ((job)=>{
-
+        
         res.json(job)
     })
     .catch((err)=>{

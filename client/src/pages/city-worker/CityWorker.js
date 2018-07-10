@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Navbar from "../../components/employee-navbar";
 import ClosedTickets from "../../components/closed-tickets";
+import WorkerCard from "../../components/workerCard";
 
 import API from "../../util/API";
 
@@ -24,7 +25,7 @@ class CityWorker extends Component {
 
             API.getEmployee(id)
                 .then((worker) => {
-                    console.log(worker.data)
+                    // console.log(worker.data)
                     this.setState({
                         worker: {
                             id: worker.data.id,
@@ -39,7 +40,6 @@ class CityWorker extends Component {
                 console.log(job.data)
                 if (job.data) {
                     this.setState({
-                        dispatched: true,
                         job: job.data,
                     })
                 }
@@ -57,7 +57,6 @@ class CityWorker extends Component {
                 console.log(job.data)
                 if (job.data) {
                     this.setState({
-                        dispatched: true,
                         job: job.data
                     })
                 }
@@ -69,11 +68,13 @@ class CityWorker extends Component {
             <div>
                 <Navbar fullname={this.state.worker.fullname} />
                 <div className="container">
-                    <ClosedTickets />
-                    {this.state.dispatched ?
-                        null
+                    {this.state.job ?
+                        <WorkerCard {...this.state.job} />
                         :
-                        <button className="btn" onClick={this.onDispatchHandler}>Dispatch a job</button>
+                        <div>
+                            <ClosedTickets />
+                            <button className="btn" onClick={this.onDispatchHandler}>Dispatch a job</button>
+                        </div>
                     }
                 </div>
             </div>
