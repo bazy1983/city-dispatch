@@ -9,10 +9,7 @@ var loggedin = function(req, res, next) {
   }
 }
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  // res.render('index', { title: 'Express' });
-});
+
 
 router.get('/login', function(req, res, next) {
   // res.render('login');
