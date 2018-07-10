@@ -32,7 +32,7 @@ const storage = new GridFsStorage({
   file: (req, file) => {
 
     return new Promise((resolve, reject) => {
-        //renaming files to prevent dublicates, file name will be somthing like fpisj33359fspjr3o4fik.extensionName
+      //renaming files to prevent dublicates, file name will be somthing like fpisj33359fspjr3o4fik.extensionName
       crypto.randomBytes(16, (err, buf) => {
         if (err) {
           return reject(err);
@@ -42,7 +42,7 @@ const storage = new GridFsStorage({
           filename: filename,
           bucketName: 'uploads'
         };
-          //upload to mongodb
+        //upload to mongodb
         resolve(fileInfo);
       });
     });
@@ -58,38 +58,38 @@ const upload = multer({ storage });
 //post route for form data inputs
 //upload.single is middleware to handle file upload,
 //middleware creates req.file object after it gets uploaded to db
-router.post("/reportTicket", upload.single("file"), function(req, res){
-    let ticket = req.body;
-    // console.log(req.body)
-    ticket.imgBefore = req.file.filename //added the constructed file name to the req.body object
-    db.Ticket.create(ticket) 
-    .then(function(){
-        res.send("okay")
+router.post("/reportTicket", upload.single("file"), function (req, res) {
+  let ticket = req.body;
+  // console.log(req.body)
+  ticket.imgBefore = req.file.filename //added the constructed file name to the req.body object
+  db.Ticket.create(ticket)
+    .then(function () {
+      res.send("okay")
     })
-    .catch(function(err){
-        console.log(err)
-        res.status(500).json({err : "some error"})
+    .catch(function (err) {
+      console.log(err)
+      res.status(500).json({ err: "some error" })
     })
 })
 
-router.get("/files", function(req, res){
+router.get("/files", function (req, res) {
   db.Ticket.find({})
-  .then(function(results){
-    res.render("images", {
-      layout : "addProject.handlebars",
-      projects : results
+    .then(function (results) {
+      res.render("images", {
+        layout: "addProject.handlebars",
+        projects: results
+      })
     })
-  })
 })
 
-router.post("/make-workflow-step", upload.single("file"), (req,res)=>{
+router.post("/make-workflow-step", upload.single("file"), (req, res) => {
   let workflowStep = req.body;
   workflowStep.imgName = req.file.filename;
   console.log(workflowStep)
   db.Workflow.create(workflowStep)
-  .then(()=>{
-    res.send("okay")
-  })
+    .then(() => {
+      res.send("okay")
+    })
 })
 
 
@@ -106,12 +106,12 @@ router.get("/image/:filename", function (req, res) {
     if (file.contentType === "image/jpeg" || file.contentType === "image/png" || file.contentType === "image/gif") {
 
       const readstream = gfs.createReadStream(file.filename);
-        //create a read stream and set the headers using res object
+      //create a read stream and set the headers using res object
       readstream.pipe(res);
     } else {
-      res.status(404).json({err : "not an image"});
+      res.status(404).json({ err: "not an image" });
     }
-    
+
   })
 })
 
@@ -120,4 +120,7 @@ router.get("/image/:filename", function (req, res) {
 
 
 
-module.exports = router;
+module.exports = {
+  router: router,
+  conn: conn
+};

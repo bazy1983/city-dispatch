@@ -17,9 +17,11 @@ require("./config/passport")(passport);
 //requiring routes
 var htmlRoutes = require('./routes/htmlRoutes');
 var apiRoutes = require('./routes/apiRoutes');
-var withFileRoutes = require('./routes/withfileRoutes')
+var withFileRoutes = require('./routes/withfileRoutes').router
 var authRouter = require("./routes/authRoutes")(passport);
 
+//mongoose connection
+var conn = require("./routes/withfileRoutes").conn;
 
 
 const PORT = process.env.PORT || 8000;
@@ -39,7 +41,7 @@ app.use(session({
   secret : "thesecret",
   saveUninitialized: false,
   resave: false,
-  store : user,
+  store : new MongoStore({mongooseConnection : conn}),
   cookie : {
     httpOnly : false,
   }
