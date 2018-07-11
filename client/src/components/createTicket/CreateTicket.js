@@ -38,10 +38,14 @@ class CreateTicket extends Component {
 
             let uri = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyBg0e7AgzhzR0TlskMw9UaQKaEumFzEZy8`;
             axios(uri).then((location) => {
-                let approximate = location.data.results.filter((el) => {
-                    return el.geometry.location_type === "APPROXIMATE"  //RANGE_INTERPOLATED
+                let address = location.data.results.filter((el) => {
+                    return el.geometry.location_type === "RANGE_INTERPOLATED"  //RANGE_INTERPOLATED
                 })
-                console.log(approximate)
+                if(address){
+                    let addressArr = address[0].formatted_address.split(", ")
+                    console.log(addressArr)
+                    // document.querySelector("#street").value = 
+                }
             })
         })
     }
@@ -77,17 +81,7 @@ class CreateTicket extends Component {
             .then((result) => {
                 console.log(result)
             });
-        // $.ajax({
-        //     url: url,
-        //     type: method,
-        //     data: data,
-        //     contentType: false,
-        //     cache: false,
-        //     processData: false
-        // })
-        //     .done(function () {
-        //         console.log("all good!")
-        //     })
+
     }
 
     render() {
@@ -153,7 +147,7 @@ class CreateTicket extends Component {
                         <div className="input-field col l12 s12">
                             <i className="material-icons prefix">description</i>
                             {/* <input id="desc" required type="text" className="validate" onChange={this.onChangeHandler}/> */}
-                            <textarea id="desc" class="materialize-textarea" onChange={this.onChangeHandler}></textarea>
+                            <textarea id="desc" className="materialize-textarea" onChange={this.onChangeHandler}></textarea>
                             <label htmlFor="desc">General Description</label>
                         </div>
 

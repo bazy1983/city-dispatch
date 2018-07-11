@@ -52,9 +52,9 @@ class UserProfile extends Component {
                             <div className="background">
                                 <img src="./images/sidebar.jpg" alt="" width="300px" height="200px" />
                             </div>
-                            <a href="#user"><img className="circle" src="./images/person.jpg" alt="" /></a>
-                            <a href="#name"><strong className="white-text name">{this.state.fullname}</strong></a>
-                            <a href="#email"><strong className="white-text email">{this.state.email}</strong></a>
+                            <a ><img className="circle" src="./images/person.jpg" alt="" /></a>
+                            <a ><strong className="white-text name">{this.state.fullname}</strong></a>
+                            <a ><strong className="white-text email">{this.state.email}</strong></a>
                         </div>
                     </li>
                     {this.props.children}

@@ -18,7 +18,7 @@ class Login extends Component {
                                 <div className="input-field col s12">
                                     <label htmlFor="password">Password </label>
                                     <input type="password" className="validate" name="password" id="password" />
-                                    <input type="hidden" id="custId" name="roleId" value={this.props.role}/>
+                                    <input type="hidden" id="custId" name="roleId" value={this.props.roleid}/>
                                 </div>
                             </div>
                         </div>

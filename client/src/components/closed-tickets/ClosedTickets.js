@@ -7,7 +7,7 @@ const ClosedTickets = (props) => (
             props.closedJobs.map((el) => {
                 return (
                     <li
-                        className="collection-item left-align"
+                        className="collection-item left-align fixCloseedIcons"
                         key={el._id}
                     >
                     <i className="material-icons">assignment</i> {el.street}, {el.city}, {el.state}, {el.zip}

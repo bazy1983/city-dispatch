@@ -13,7 +13,7 @@ class AuthInspector extends Component {
                     <Route
                         exact path="/inspect"
                         render={() =>
-                            <Login {...this.props} role="1">
+                            <Login {...this.props} roleid="1">
                                 <div className="h6 left-align">
                                     <Link to="/employee-forget">Forgot your password? </Link>
                                     <br />
