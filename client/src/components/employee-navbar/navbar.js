@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import "./navbar.css";
+import API from "../../util/API";
 
 
 class Navbar extends Component {
+
+    signout = () => {
+        API.logout()
+        .then(()=>{
+            let pathname = window.location.pathname;
+            if (pathname === "/city-worker") { 
+                window.location = "/work"
+            } else {
+                window.location = "/inspect"
+            }
+        })
+    }
     render() {
         return (
             <nav className="indigo darken-4">
@@ -20,7 +33,7 @@ class Navbar extends Component {
                             <li><a >two</a></li>
                             <li className="divider" tabIndex="-1"></li>
                             <li><a >three</a></li>
-                            <li><a ><i className="material-icons">view_module</i>four</a></li>
+                            <li><a onClick={this.signout}><i className="material-icons left">eject</i>Logout</a></li>
                             <li><a ><i className="material-icons">exit_to_app</i>Exit</a></li>
                         </ul>
                     </ul>

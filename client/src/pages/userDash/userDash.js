@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import UserProfile from "../../components/userProfile";
 import CityAnnounce from "../../components/userProfile-Announce";
 import CreateTicket from "../../components/createTicket/CreateTicket";
-import axios from "axios";
 import API from "../../util/API";
 
 
@@ -23,9 +22,9 @@ class UserDash extends Component {
             })
     }
 
-    logout = (e) => {
+    signout = (e) => {
         e.preventDefault();
-        axios.get("/auth/logout")
+        API.logout()
             .then(() => {
                 window.location = "/"
             })
@@ -50,7 +49,7 @@ class UserDash extends Component {
                     <li><a ><i className="material-icons" style={this.state.showCreateTicket ? { color: "red" } : null}>close</i>View rejected tickets</a></li>
                     <li><div className="divider"></div></li>
                     <li><a ><i className="material-icons">insert_chart</i>Stats</a></li>
-                    <li><a href="/" onClick={this.logout}><i className="material-icons">exit_to_app</i>Signout</a></li>
+                    <li><a href="/" onClick={this.signout}><i className="material-icons">exit_to_app</i>Signout</a></li>
                     <li><a className="waves-effect" >Third Link With Waves</a></li>
                     <li><a className="subheader">Subheader</a></li>
                 </UserProfile>

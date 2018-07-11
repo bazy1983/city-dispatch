@@ -115,7 +115,7 @@ router.put("/dispatchOne", (req, res)=>{
 
 //get current instructions for dispatched job
 router.get("/stage", (req, res)=>{
-    // console.log(req.query)
+    console.log(req.query)
     db.Workflow.findOne({
         flowFor : req.query.flowFor,
         stepNumber : req.query.stepNumber
@@ -128,15 +128,16 @@ router.get("/stage", (req, res)=>{
         console.log(err);
         res.status(404).end()
     })
-    if(req.query.flowFor === 1){
-        db.Ticket.findByIdAndUpdate(req.query.id, {
+    if(req.query.flowFor === "1"){
+        console.log(req.query.id, req.query.stepNumber)
+        db.Ticket.findOneAndUpdate({_id :req.query.id}, {
             inspectStage : req.query.stepNumber
         })
         .then((data)=>{
             // console.log(data)
         })
     } else {
-        db.Ticket.findByIdAndUpdate(req.query.id, {
+        db.Ticket.findOneAndUpdate({_id :req.query.id}, {
             dispatchStage : req.query.stepNumber
         })
         .then((data)=>{
@@ -244,6 +245,31 @@ router.get("/check-dispatch/:id", (req, res)=>{
     .catch((err)=>{
         console.log(err)
         res.status(404).json({err: "some err!!"})
+    })
+})
+
+router.get("/tickets-per-month", (req, res) => {
+    let today = new Date;
+    let thisMonth = today.getMonth();
+    let thisYear = today.getFullYear();
+    db.Ticket.find({
+        createdAt : { $gte : new Date(thisYear, thisMonth, 1)}
+    })
+    .then((tickets) => {
+        res.json({count : tickets.length})
+    })
+})
+
+router.get("/inspected-per-month", (req, res) => {
+    let today = new Date;
+    let thisMonth = today.getMonth();
+    let thisYear = today.getFullYear();
+    db.Ticket.find({
+        inspectDate : { $gte : new Date(thisYear, thisMonth, 1)},
+        assignedToInspector : true
+    })
+    .then((tickets) => {
+        res.json({count : tickets.length})
     })
 })
 

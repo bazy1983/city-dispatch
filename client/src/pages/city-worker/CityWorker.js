@@ -14,7 +14,7 @@ class CityWorker extends Component {
     state = {
         dispatched: false,
         job: "",
-        closedJobs: [],
+        closedJobs: "",
         worker: {},
         loading: true,
         stage: "",
@@ -50,7 +50,7 @@ class CityWorker extends Component {
                 this.setState({
                     loading: false
                 })
-                console.log(job.data)
+                // console.log(job.data)
                 if (!Array.isArray(job.data)) { //if jobs not closed
                     API.getStage(job.data.dispatchStage, 2)
                         .then((instructions) => {
@@ -58,7 +58,7 @@ class CityWorker extends Component {
                                 job: job.data,
                                 loading: false,
                                 stage: instructions.data,
-                                closedJobs: []
+                                closedJobs: ""
                             })
                             // console.log(this.state)
                         })
@@ -69,7 +69,7 @@ class CityWorker extends Component {
                         loading: false,
                         stage: ""
                     })
-                    console.log(this.state)
+                    // console.log(this.state)
                 }
             })
 

@@ -7,6 +7,9 @@ export default {
     getUser : function(id) {
         return axios.get("/api/getUser/" + id);
     },
+    logout : function() {
+        return axios.get("/auth/logout")
+    },
     getTickets : function(employeeId) {
         return axios.get("/api/all-tickets/" + employeeId);
     },
@@ -58,5 +61,11 @@ export default {
     },
     checkDispatch: function(employeeId){
         return axios.get("/api/check-dispatch/" + employeeId)
+    },
+    ticketMonthCount : function(){
+        return axios.get("/api/tickets-per-month")
+    },
+    InspectedMonthCount : function(){
+        return axios.get("/api/inspected-per-month")
     }
 }

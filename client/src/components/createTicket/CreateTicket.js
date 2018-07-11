@@ -44,7 +44,10 @@ class CreateTicket extends Component {
                 if(address){
                     let addressArr = address[0].formatted_address.split(", ")
                     console.log(addressArr)
-                    // document.querySelector("#street").value = 
+                    document.querySelector("#street").value = addressArr[0];
+                    document.querySelector("#city").value = addressArr[1];
+                    document.querySelector("#state").value = addressArr[2].substring(0,2);
+                    document.querySelector("#zip").value = addressArr[2].substring(3);
                 }
             })
         })

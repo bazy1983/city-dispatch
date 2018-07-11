@@ -7,6 +7,8 @@ import InspectTickets from "../../components/inspectTickets";
 import Navbar from "../../components/employee-navbar";
 import InspectorDispatch from "../../components/inspector-dispatch";
 import Loader from "../../components/loader";
+import TicketStat from "../../components/inspector-ticket-stats/";
+
 
 class Inspector extends Component {
 
@@ -110,28 +112,37 @@ class Inspector extends Component {
                 <Navbar
                     fullname={this.state.inspector.fullname}
                 />
-                {this.state.loading ? <Loader /> : null}
+                {this.state.loading ? <Loader />
+                    :
+                    <div className="container">
+                        <TicketStat />
+
+                    </div>
+                }
                 {this.state.tickets ?
-                    <ul className="collapsible popout ticket" >
-                        {this.state.tickets.map((ticket) => {
-                            return (
-                                <InspectTickets
-                                    key={ticket._id}
-                                    ticketId={ticket._id}
-                                    street={ticket.street}
-                                    city={ticket.city}
-                                    state={ticket.state}
-                                    zip={ticket.zip}
-                                    length={ticket.length}
-                                    width={ticket.width}
-                                    depth={ticket.depth}
-                                    desc={ticket.desc}
-                                    img={ticket.imgBefore}
-                                    dispatchJob={this.dispatchHandler}
-                                />
-                            )
-                        })}
-                    </ul>
+                    <div>
+
+                        <ul className="collapsible popout ticket" >
+                            {this.state.tickets.map((ticket) => {
+                                return (
+                                    <InspectTickets
+                                        key={ticket._id}
+                                        ticketId={ticket._id}
+                                        street={ticket.street}
+                                        city={ticket.city}
+                                        state={ticket.state}
+                                        zip={ticket.zip}
+                                        length={ticket.length}
+                                        width={ticket.width}
+                                        depth={ticket.depth}
+                                        desc={ticket.desc}
+                                        img={ticket.imgBefore}
+                                        dispatchJob={this.dispatchHandler}
+                                    />
+                                )
+                            })}
+                        </ul>
+                    </div>
                     :
                     null
                 }
