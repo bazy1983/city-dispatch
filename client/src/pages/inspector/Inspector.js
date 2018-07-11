@@ -14,8 +14,8 @@ class Inspector extends Component {
         tickets: [],
         oneTicket: "",
         inspector: {},
-        loading : true,
-        stage : "",
+        loading: true,
+        stage: "",
     }
 
     componentDidMount() {
@@ -49,18 +49,16 @@ class Inspector extends Component {
                 if (Array.isArray(tickets.data)) {
                     // console.log("not dispatched");
                     this.setState({ tickets: tickets.data, oneTicket: "" });
-                    
+
                 } else {
                     // console.log("dispatched")
-                    API.getStage(tickets.data.inspectStage, 1) //1 represent inspector
-                    .then((instructions)=>{  
-                        console.log(instructions.data)
-                        this.setState({ tickets: [], oneTicket: tickets.data, stage : instructions.data })
-                    })
-                    
+                    API.getStage(tickets.data.inspectStage, 1) //1 = inspector
+                        .then((instructions) => {
+                            // console.log(instructions.data)
+                            this.setState({ tickets: [], oneTicket: tickets.data, stage: instructions.data })
+                        })
                 }
-
-                this.setState({loading : false})
+                this.setState({ loading: false })
             })
 
     }
@@ -77,7 +75,7 @@ class Inspector extends Component {
         }, 800)
     }
 
-    nextStep = (step)=>{
+    nextStep = (step) => {
         // let next = step + 1;
         let notes = document.querySelector("#narratives");
         if (notes) {
@@ -85,25 +83,25 @@ class Inspector extends Component {
         }
 
         API.getStage(step, 1, this.state.oneTicket._id)
-        .then((instructions)=>{
-            this.setState({stage : instructions.data})
-        })
+            .then((instructions) => {
+                this.setState({ stage: instructions.data })
+            })
     }
 
-    closeTicket = ()=> {
+    closeTicket = () => {
         API.closeOut(this.state.oneTicket._id, 1)
-        .then(()=>{
-            this.setState({loading : true, oneTicket : ""})
-            this.componentDidMount()
-        })
+            .then(() => {
+                this.setState({ loading: true, oneTicket: "" })
+                this.componentDidMount()
+            })
     }
 
-    dismissTicket = ()=> {
+    dismissTicket = () => {
         API.dismiss(this.state.oneTicket._id)
-        .then(()=>{
-            this.setState({loading : true, oneTicket : ""})
-            this.componentDidMount()
-        })
+            .then(() => {
+                this.setState({ loading: true, oneTicket: "" })
+                this.componentDidMount()
+            })
     }
 
     render() {
@@ -112,7 +110,7 @@ class Inspector extends Component {
                 <Navbar
                     fullname={this.state.inspector.fullname}
                 />
-                {this.state.loading?<Loader/>:null}
+                {this.state.loading ? <Loader /> : null}
                 {this.state.tickets ?
                     <ul className="collapsible popout ticket" >
                         {this.state.tickets.map((ticket) => {
@@ -134,13 +132,13 @@ class Inspector extends Component {
                             )
                         })}
                     </ul>
-                    : 
+                    :
                     null
-                    }
-                {this.state.oneTicket?
+                }
+                {this.state.oneTicket ?
                     <InspectorDispatch closeTicket={this.closeTicket} dismissTicket={this.dismissTicket} nextStep={this.nextStep} {...this.state.stage} />
-                :
-                null
+                    :
+                    null
                 }
             </div>
         )

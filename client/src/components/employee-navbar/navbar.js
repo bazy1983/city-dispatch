@@ -16,12 +16,12 @@ class Navbar extends Component {
                         </div>
 
                         <ul id='dropdown1' className='dropdown-content translateDown'>
-                            <li><a href="#!">one</a></li>
-                            <li><a href="#!">two</a></li>
+                            <li><a >one</a></li>
+                            <li><a >two</a></li>
                             <li className="divider" tabIndex="-1"></li>
-                            <li><a href="#!">three</a></li>
-                            <li><a href="#!"><i className="material-icons">view_module</i>four</a></li>
-                            <li><a href="#!"><i className="material-icons">exit_to_app</i>Exit</a></li>
+                            <li><a >three</a></li>
+                            <li><a ><i className="material-icons">view_module</i>four</a></li>
+                            <li><a ><i className="material-icons">exit_to_app</i>Exit</a></li>
                         </ul>
                     </ul>
                 </div>

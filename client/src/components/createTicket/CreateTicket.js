@@ -97,6 +97,17 @@ class CreateTicket extends Component {
                     <h3 className="left-align">Report a pothole</h3>
                 </div>
                 <form id="ticketForm" className="card hoverable" onSubmit={this.onSubmitHandler} encType='multipart/form-data'>
+
+                    <div className="file-field input-field fixFileInput">
+                        <div className="btn">
+                            <span>File</span>
+                            <input name="file" type="file" />
+                        </div>
+                        <div className="file-path-wrapper">
+                            <input className="file-path validate" type="text" />
+                        </div>
+                    </div>
+
                     <div className="row">
                         <div className="input-field col l6 s12">
                             <i className="material-icons prefix">border_vertical</i>
@@ -138,16 +149,6 @@ class CreateTicket extends Component {
                             <input name= "file" id="upload" required type="file" className="validate" />
                             <label htmlFor="upload"></label>
                         </div> */}
-
-                        <div class="file-field input-field">
-                            <div class="btn">
-                                <span>File</span>
-                                <input name="file" type="file" />
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" />
-                            </div>
-                        </div>
 
                         <div className="input-field col l12 s12">
                             <i className="material-icons prefix">description</i>

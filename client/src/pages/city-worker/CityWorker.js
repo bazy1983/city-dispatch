@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import Navbar from "../../components/employee-navbar";
 import ClosedTickets from "../../components/closed-tickets";
 import WorkerCard from "../../components/workerCard";
+import Loader from "../../components/loader";
+import "./cityworker.css";
 
 import API from "../../util/API";
 
@@ -12,7 +14,11 @@ class CityWorker extends Component {
     state = {
         dispatched: false,
         job: "",
-        worker: {}
+        closedJobs: [],
+        worker: {},
+        loading: true,
+        stage: "",
+        noJobs: ""
     }
 
     componentDidMount() {
@@ -33,15 +39,37 @@ class CityWorker extends Component {
                         }
                     })
                 })
+                .catch((err) => {
+                    console.log(err)
+                })
+
         }
 
-        API.checkDispatch(id)
+        API.checkDispatch(id) //employee id
             .then((job) => {
+                this.setState({
+                    loading: false
+                })
                 console.log(job.data)
-                if (job.data) {
+                if (!Array.isArray(job.data)) { //if jobs not closed
+                    API.getStage(job.data.dispatchStage, 2)
+                        .then((instructions) => {
+                            this.setState({
+                                job: job.data,
+                                loading: false,
+                                stage: instructions.data,
+                                closedJobs: []
+                            })
+                            // console.log(this.state)
+                        })
+                } else {
                     this.setState({
-                        job: job.data,
+                        closedJobs: job.data,
+                        job: "",
+                        loading: false,
+                        stage: ""
                     })
+                    console.log(this.state)
                 }
             })
 
@@ -49,17 +77,43 @@ class CityWorker extends Component {
                 console.log(err)
             })
 
-    }
+    } //end of componentDidMount
 
     onDispatchHandler = () => {
         API.dispatchJob(this.state.worker.id)
             .then((job) => {
-                console.log(job.data)
-                if (job.data) {
-                    this.setState({
-                        job: job.data
-                    })
+                if (!job.data.hasOwnProperty("job")) {
+                    API.getStage(job.data.dispatchStage, 2) //1 = inspector
+                        .then((instructions) => {
+                            this.setState({
+                                job: job.data,
+                                stage: instructions.data,
+                                onJobs: ""
+                            })
+                        })
+                } else {
+                    console.log(job.data.job)
+                    this.setState({ noJobs: job.data.job })
                 }
+            })
+    }
+
+    nextStep = (step) => {
+        let notes = document.querySelector("#narratives");
+        if (notes) {
+            API.addNarratives(notes.value, this.state.oneTicket._id);
+        }
+        API.getStage(step, 2, this.state.job._id)
+            .then((instructions) => {
+                this.setState({ stage: instructions.data })
+            })
+    }
+
+    closeTicket = () => {
+        API.closeOut(this.state.job._id, 2)
+            .then(() => {
+                this.setState({ loading: true, job: "" })
+                this.componentDidMount()
             })
     }
 
@@ -68,14 +122,25 @@ class CityWorker extends Component {
             <div>
                 <Navbar fullname={this.state.worker.fullname} />
                 <div className="container">
-                    {this.state.job ?
-                        <WorkerCard {...this.state.job} />
+                    {this.state.loading ?
+                        <Loader />
                         :
                         <div>
-                            <ClosedTickets />
-                            <button className="btn" onClick={this.onDispatchHandler}>Dispatch a job</button>
+                            {
+                                this.state.job ?
+                                    <WorkerCard closeTicket={this.closeTicket} nextStep={this.nextStep} {...this.state.job} {...this.state.stage} {...this.state.closedJobs} />
+                                    :
+                                    <div>
+                                        <ClosedTickets closedJobs={this.state.closedJobs} />
+                                        <button className="btn" onClick={this.onDispatchHandler}>Dispatch a job</button>
+                                        {this.state.noJobs ?
+                                            <h5>{this.state.noJobs}</h5>
+                                            : null}
+                                    </div>
+                            }
                         </div>
                     }
+
                 </div>
             </div>
         )

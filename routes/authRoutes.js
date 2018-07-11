@@ -59,7 +59,7 @@ module.exports = function (passport) {
                     record.role = 10;
                     record.save(function (err, user) {
                         if (err) { res.status(500).send({ err: "db error" }) }
-                        else { res.send(user) }
+                        else { res.redirect("/") }
                     })
                 }
             })

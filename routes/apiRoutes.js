@@ -128,16 +128,27 @@ router.get("/stage", (req, res)=>{
         console.log(err);
         res.status(404).end()
     })
-    db.Ticket.findByIdAndUpdate(req.query.id, {
-        inspectStage : req.query.stepNumber
-    })
-    .then((data)=>{
-        // console.log(data)
-    })
+    if(req.query.flowFor === 1){
+        db.Ticket.findByIdAndUpdate(req.query.id, {
+            inspectStage : req.query.stepNumber
+        })
+        .then((data)=>{
+            // console.log(data)
+        })
+    } else {
+        db.Ticket.findByIdAndUpdate(req.query.id, {
+            dispatchStage : req.query.stepNumber
+        })
+        .then((data)=>{
+            // console.log(data)
+        })
+    }
 })
 
-//inspector close out ticket
+//employee close out ticket
 router.put("/closeTicket", (req, res)=>{
+    // console.log("hitting close")
+    console.log(req.body)
     if (req.body.employee === 1 ){
         db.Ticket.findByIdAndUpdate(req.body.id, {
             approved : true,
@@ -145,10 +156,20 @@ router.put("/closeTicket", (req, res)=>{
             inspecterOpen: false
         })
         .then(()=>{
-            res.send("okay")
             //ADD USER REWARDS
         })
+    } else if (req.body.employee === 2){
+        // console.log("city worker is trying to close out")
+        db.Ticket.findOneAndUpdate({_id : req.body.id}, {
+            closed : true,
+            dispatchable : false
+        })
+        .then((job) => {
+            //update user
+            // console.log(job)
+        })
     }
+    res.send("okay")
 })
 
 router.put("/dismiss-ticket", (req, res)=>{
@@ -174,16 +195,22 @@ router.put("/narratives", (req,res)=>{
 
 //city worker get one job
 router.get("/getOneJob/:employeeId", (req, res)=>{
-    console.log(req.params.employeeId)
+    // console.log(req.params.employeeId)
     db.Ticket.findOneAndUpdate({
         dispatchable : true,
-        dispatched : false
+        dispatched : false,
+        closed : false
     }, {
         teamId : req.params.employeeId,
-        dispatched: true
+        dispatched: true,
+        dispatchDate : moment().format("MM/DD/YYYY")
     })
     .then((job)=>{
-        res.status(200).json(job);
+        if(job){
+            res.status(200).json(job);
+        } else {
+            res.json({job : "There are no more jobs available in the pool"})
+        }
     })
     .catch((err)=>{
         console.log(err);
@@ -198,8 +225,21 @@ router.get("/check-dispatch/:id", (req, res)=>{
         closed : false
     })
     .then ((job)=>{
-        
-        res.json(job)
+        console.log(job)
+        if(job !== null){
+            // console.log("found open job!")
+            res.json(job)
+        } else {
+            // console.log("on open jobs found!")
+            db.Ticket.find({
+                teamId : req.params.id,
+                closed : true,
+                dispatchDate : moment().format("MM/DD/YYYY")
+            })
+            .then ((closeJobsOfTheDay) => {
+                res.json(closeJobsOfTheDay);
+            })
+        }
     })
     .catch((err)=>{
         console.log(err)

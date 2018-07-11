@@ -1,3 +1,8 @@
 .margin-down {
     margin: 0px 10px 15px
 }
+
+.fixFileInput {
+    margin: 10px 10px;
+    padding-top: 10px;
+}
