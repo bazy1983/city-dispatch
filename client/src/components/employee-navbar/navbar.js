@@ -29,7 +29,7 @@ class Navbar extends Component {
                         </div>
 
                         <ul id='dropdown1' className='dropdown-content translateDown'>
-                            <li><a >one</a></li>
+                            <li><a onClick = {this.props.toggleStat}>{this.props.showStat?<span>Hide Stat</span>:<span>Show Stat</span>}</a></li>
                             <li><a >two</a></li>
                             <li className="divider" tabIndex="-1"></li>
                             <li><a >three</a></li>

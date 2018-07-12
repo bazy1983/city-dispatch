@@ -18,6 +18,7 @@ class Inspector extends Component {
         inspector: {},
         loading: true,
         stage: "",
+        showStat: false
     }
 
     componentDidMount() {
@@ -27,7 +28,7 @@ class Inspector extends Component {
         var parts = value.split("; _acc=");
         if (parts.length === 2) {
             id = parts.pop().split(";").shift().replace("j%3A%22", "").replace("%22", "");
-            if(id === "") {
+            if (id === "") {
                 window.location = "/inspect"
             }
             API.getEmployee(id)
@@ -108,16 +109,25 @@ class Inspector extends Component {
             })
     }
 
+    toggleStat = () => {
+        this.setState({ showStat: !this.state.showStat })
+    }
+
     render() {
         return (
             <div>
                 <Navbar
                     fullname={this.state.inspector.fullname}
+                    toggleStat={this.toggleStat}
+                    showStat = {this.state.showStat}
                 />
                 {this.state.loading ? <Loader />
                     :
                     <div className="container">
-                        <TicketStat />
+                        {this.state.showStat ?
+                            <TicketStat />
+                            : null
+                        }
 
                     </div>
                 }

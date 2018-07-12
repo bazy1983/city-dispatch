@@ -78,7 +78,10 @@ const TicketSchema = new Schema({
         default: false
     },
     dispatchDate: {
-        type : String
+        type : Date
+    },
+    dispatchClose : {
+        type : Date
     },
     dispatchStage : {
         type : Number,
@@ -93,6 +96,10 @@ const TicketSchema = new Schema({
     closed: {
         type : Boolean,
         default : false
+    },
+    dispatchDuration :{
+        type : Number,
+        default : 0
     }
 },{
     timestamps : true

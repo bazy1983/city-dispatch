@@ -63,7 +63,7 @@ class CityWorker extends Component {
                             // console.log(this.state)
                         })
                 } else {
-                    this.setState({
+                    this.setState({ //send closed jobs to completed list
                         closedJobs: job.data,
                         job: "",
                         loading: false,
@@ -79,10 +79,10 @@ class CityWorker extends Component {
 
     } //end of componentDidMount
 
-    onDispatchHandler = () => {
+    onDispatchHandler = () => { //click on dispatch a job
         API.dispatchJob(this.state.worker.id)
             .then((job) => {
-                if (!job.data.hasOwnProperty("job")) {
+                if (!job.data.hasOwnProperty("job")) { // if job found
                     API.getStage(job.data.dispatchStage, 2) //1 = inspector
                         .then((instructions) => {
                             this.setState({
@@ -91,7 +91,7 @@ class CityWorker extends Component {
                                 onJobs: ""
                             })
                         })
-                } else {
+                } else { //no jobs found
                     console.log(job.data.job)
                     this.setState({ noJobs: job.data.job })
                 }

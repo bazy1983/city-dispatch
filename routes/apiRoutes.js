@@ -180,7 +180,8 @@ router.put("/closeTicket", (req, res)=>{
         // console.log("city worker is trying to close out")
         db.Ticket.findOneAndUpdate({_id : req.body.id}, {
             closed : true,
-            dispatchable : false
+            dispatchable : false,
+            dispatchClose : new Date
         })
         .then((job) => {
             //update user
@@ -221,7 +222,7 @@ router.get("/getOneJob/:employeeId", (req, res)=>{
     }, {
         teamId : req.params.employeeId,
         dispatched: true,
-        dispatchDate : moment().format("MM/DD/YYYY")
+        dispatchDate : new Date
     })
     .then((job)=>{
         if(job){
@@ -237,24 +238,35 @@ router.get("/getOneJob/:employeeId", (req, res)=>{
 })
 
 router.get("/check-dispatch/:id", (req, res)=>{
-    // console.log(req.params.id)
+    let dateInfo = today();
+    // find open ticket 
     db.Ticket.findOne({
         teamId: req.params.id,
         closed : false
     })
     .then ((job)=>{
-        console.log(job)
+        // console.log(job)
         if(job !== null){
             // console.log("found open job!")
             res.json(job)
         } else {
-            // console.log("on open jobs found!")
+            // find all jobs that were closed today
             db.Ticket.find({
                 teamId : req.params.id,
                 closed : true,
-                dispatchDate : moment().format("MM/DD/YYYY")
+                dispatchDate :  { $gte : new Date(dateInfo.thisYear, dateInfo.thisMonth, dateInfo.thisDay)}
             })
             .then ((closeJobsOfTheDay) => {
+                
+                // closeJobsOfTheDay.map((el)=> { //calculate dispatch duration
+                //     let before = new moment (el.dispatchDate);
+                //     let after = new moment (el.dispatchClose);
+                //     let duration = moment.duration(after.diff(before));
+                //     let hours = duration.asHours().toFixed(2);
+                //     el.dispatchDuration = hours;
+                //     return el
+                // })
+                // console.log(closeJobsOfTheDay)
                 res.json(closeJobsOfTheDay);
             })
         }
