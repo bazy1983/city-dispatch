@@ -4,6 +4,20 @@ const keys = "6c19e66fe2921d2b074b34768fb253b6"
 const request = require("request");
 const moment = require ("moment");
 
+function today () {
+    let todayDate = new Date;
+    let thisDay = todayDate.getDate()
+    let thisMonth = todayDate.getMonth();
+    let thisYear = todayDate.getFullYear();
+        return {
+        firstDay : 1,
+        thisDay : thisDay,
+        thisMonth : thisMonth,
+        thisYear : thisYear
+    }    
+}
+
+
 router.get("/getUser/:id", (req, res) => {
     // console.log(req.params.id)
     db.User.findById(req.params.id)
@@ -55,10 +69,11 @@ router.get("/getWeather/:lat/:log", (req, res) => {
 
 //get open ticket for inspector view OR get all ticket
 router.get("/all-tickets/:inspectorId", (req, res)=>{
+    let dateInfo = today();
     db.Ticket.findOne({
         inspecterOpen : true,// ticket still open
         inspectorId : req.params.inspectorId,
-        inspectDate : moment().format("MM/DD/YYYY")  
+        inspectDate : {$gte : new Date(dateInfo.thisYear, dateInfo.thisMonth, dateInfo.thisDay)}
     })
     .then((openTicket)=>{
         // if open ticket is found
@@ -74,12 +89,14 @@ router.get("/all-tickets/:inspectorId", (req, res)=>{
                 res.status(200).json(tickets)
             })
             .catch((err)=>{
-                sendError(err);
+                console.log(err)
+                res.status(404).json({err: "some err"});
             });
         }
     })
     .catch((err)=> { //catch for findOne
-        sendError(err)
+        console.log(err)
+        res.status(404).json({err: "some err"})
     })
 
 });
@@ -104,7 +121,7 @@ router.put("/dispatchOne", (req, res)=>{
         assignedToInspector : true,
         inspectorId : req.body.inspectorId,
         inspectStage: 1,
-        inspectDate : moment().format("MM/DD/YYYY"),
+        inspectDate : new Date,
         inspecterOpen : true
     })
     .then((updatedTicket)=>{
@@ -115,7 +132,7 @@ router.put("/dispatchOne", (req, res)=>{
 
 //get current instructions for dispatched job
 router.get("/stage", (req, res)=>{
-    console.log(req.query)
+    // console.log(req.query)
     db.Workflow.findOne({
         flowFor : req.query.flowFor,
         stepNumber : req.query.stepNumber
@@ -129,7 +146,6 @@ router.get("/stage", (req, res)=>{
         res.status(404).end()
     })
     if(req.query.flowFor === "1"){
-        console.log(req.query.id, req.query.stepNumber)
         db.Ticket.findOneAndUpdate({_id :req.query.id}, {
             inspectStage : req.query.stepNumber
         })
@@ -154,7 +170,8 @@ router.put("/closeTicket", (req, res)=>{
         db.Ticket.findByIdAndUpdate(req.body.id, {
             approved : true,
             dispatchable : true,
-            inspecterOpen: false
+            inspecterOpen: false,
+            inspectClose : new Date
         })
         .then(()=>{
             //ADD USER REWARDS
@@ -249,11 +266,9 @@ router.get("/check-dispatch/:id", (req, res)=>{
 })
 
 router.get("/tickets-per-month", (req, res) => {
-    let today = new Date;
-    let thisMonth = today.getMonth();
-    let thisYear = today.getFullYear();
+    let dateInfo = today();
     db.Ticket.find({
-        createdAt : { $gte : new Date(thisYear, thisMonth, 1)}
+        createdAt : { $gte : new Date(dateInfo.thisYear, dateInfo.thisMonth, dateInfo.firstDay)}
     })
     .then((tickets) => {
         res.json({count : tickets.length})
@@ -261,11 +276,9 @@ router.get("/tickets-per-month", (req, res) => {
 })
 
 router.get("/inspected-per-month", (req, res) => {
-    let today = new Date;
-    let thisMonth = today.getMonth();
-    let thisYear = today.getFullYear();
+    let dateInfo = today();
     db.Ticket.find({
-        inspectDate : { $gte : new Date(thisYear, thisMonth, 1)},
+        inspectClose : { $gte : new Date(dateInfo.thisYear, dateInfo.thisMonth, dateInfo.firstDay)},
         assignedToInspector : true
     })
     .then((tickets) => {

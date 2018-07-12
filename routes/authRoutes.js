@@ -39,6 +39,7 @@ module.exports = function (passport) {
 
     router.get('/logout', function (req, res) {
         req.logout();
+        res.cookie("_acc", "")
         res.status(200).end();
     });
     //USER AUTHENTICATION ENDS

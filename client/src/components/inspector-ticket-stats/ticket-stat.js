@@ -1,52 +1,60 @@
 import React, { Component } from "react";
 import API from "../../util/API";
 import "./ticket-stat.css";
+import TextLoading from "../textLoading";
 
 class TicketStat extends Component {
     state = {
         ticketCount: 0,
-        inspected : 0
+        inspected: 0,
+        loading: true
     }
 
     componentDidMount() {
         API.ticketMonthCount()
             .then((monthCount) => {
                 // console.log(monthCount)
-                this.setState({ ticketCount: monthCount.data.count })
+                this.setState({ ticketCount: monthCount.data.count, loading: false })
             })
         API.InspectedMonthCount()
-        .then((monthCount) => {
-            this.setState({inspected : monthCount.data.count})
-        })
+            .then((monthCount) => {
+                this.setState({ inspected: monthCount.data.count, loading: false })
+            })
     }
 
     render() {
         return (
             <div className="row">
-                <div class="col s12 m5 offset-l1">
-                    <div class="card horizontal">
-                        <div class="card-stacked">
-                            <div class="card-content">
+                <div className="col s12 m5 offset-l1">
+                    <div className="card horizontal">
+                        <div className="card-stacked">
+                            <div className="card-content">
                                 <span className="CountText">
                                     Tickets Created This month
                             </span>
                             </div>
-                            <div class="card-action">
-                                <span className="CountText">{this.state.ticketCount}</span>
+                            <div className="card-action">
+                                {this.state.loading ? <TextLoading />
+                                    :
+                                    <span className="CountText">{this.state.ticketCount}</span>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m5">
-                    <div class="card horizontal">
-                        <div class="card-stacked">
-                            <div class="card-content">
+                <div className="col s12 m5">
+                    <div className="card horizontal">
+                        <div className="card-stacked">
+                            <div className="card-content">
                                 <span className="CountText">
                                     Tickets Inspected This month
                             </span>
                             </div>
-                            <div class="card-action">
-                                <span className="CountText">{this.state.inspected}</span>
+                            <div className="card-action">
+                                {this.state.loading ? <TextLoading />
+                                    :
+                                    <span className="CountText">{this.state.inspected}</span>
+                                }
                             </div>
                         </div>
                     </div>

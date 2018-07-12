@@ -33,8 +33,8 @@ class Navbar extends Component {
                             <li><a >two</a></li>
                             <li className="divider" tabIndex="-1"></li>
                             <li><a >three</a></li>
-                            <li><a onClick={this.signout}><i className="material-icons left">eject</i>Logout</a></li>
-                            <li><a ><i className="material-icons">exit_to_app</i>Exit</a></li>
+                            <li><a onClick={this.signout}>Logout</a></li>
+                            <li><a >Exit</a></li>
                         </ul>
                     </ul>
                 </div>

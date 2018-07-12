@@ -27,7 +27,9 @@ class Inspector extends Component {
         var parts = value.split("; _acc=");
         if (parts.length === 2) {
             id = parts.pop().split(";").shift().replace("j%3A%22", "").replace("%22", "");
-
+            if(id === "") {
+                window.location = "/inspect"
+            }
             API.getEmployee(id)
                 .then((inspector) => {
                     // console.log(inspector.data)

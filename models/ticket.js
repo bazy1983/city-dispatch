@@ -58,7 +58,10 @@ const TicketSchema = new Schema({
         default : false
     },
     inspectDate : { 
-        type : String
+        type : Date
+    },
+    inspectClose : {
+        type : Date
     },
     approved: {
         type : Boolean

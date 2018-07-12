@@ -21,8 +21,8 @@ class InspectorDispatch extends Component {
                                         {this.props.stepNumber === 4 ?
                                             <div>
                                                 <div className="input-field col s12">
-                                                    <textarea id="narratives" className="materialize-textarea"></textarea>
-                                                    <label htmlFor="narratives">Textarea</label>
+                                                    <textarea id="narratives" className="materialize-textarea white-text"></textarea>
+                                                    <label htmlFor="narratives">Narratives</label>
                                                 </div>
                                             </div>
                                             : null}
@@ -35,16 +35,16 @@ class InspectorDispatch extends Component {
                             <div className="card-action">
                                 <div className="right-align">
                                     {this.props.stepNumber === 3 ?
-                                        <a href="#" onClick={this.props.dismissTicket} >Dismiss Ticket</a>
+                                        <a onClick={this.props.dismissTicket} >Dismiss Ticket</a>
                                         : null
                                     }
                                     {this.props.stepNumber > 1 ?
-                                        <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber-1)}>Back</a>
+                                        <a onClick={this.props.nextStep.bind(this, this.props.stepNumber-1)}>Back</a>
                                     :null}
                                     {this.props.final ?
-                                        <a href="#" onClick={this.props.closeTicket}>Close</a>
+                                        <a onClick={this.props.closeTicket}>Close</a>
                                         :
-                                        <a href="#" onClick={this.props.nextStep.bind(this, this.props.stepNumber+1)}>Next</a>
+                                        <a onClick={this.props.nextStep.bind(this, this.props.stepNumber+1)}>Next</a>
                                     }
 
                                 </div>
