@@ -173,8 +173,14 @@ router.put("/closeTicket", (req, res) => {
             inspecterOpen: false,
             inspectClose: new Date
         })
-            .then(() => {
+            .then((ticket) => {
                 //ADD USER REWARDS
+                db.User.findOneAndUpdate({_id : ticket.userId},{
+                    $inc : {points : 50 },
+                    notify : true,
+                    notifyText : "Your Ticket is Approved, you got 50 points..",
+                    notifyTicket : ticket._id
+                })
             })
     } else if (req.body.employee === 2) {
 
@@ -189,6 +195,11 @@ router.put("/closeTicket", (req, res) => {
             })
             .then((job) => {
                 //update user
+                db.User.findOneAndUpdate({_id : job.userId},{
+                    notify : true,
+                    notifyText : "Your Ticket is completed",
+                    notifyTicket : job._id
+                })
                 // console.log(job)
                 let before = new moment(job.dispatchDate);
                 let after = new moment(job.dispatchClose);
@@ -212,9 +223,15 @@ router.put("/dismiss-ticket", (req, res) => {
         dispatchable: false,
         inspecterOpen: false
     })
-        .then(() => {
+        .then((ticket) => {
             res.send("okay")
             //punish user!!
+            db.User.findOneAndUpdate({_id : ticket.userId},{
+                $inc : {points : 50 },
+                notify : true,
+                notifyText : "Your Ticket is denied, you lost 50 points..",
+                notifyTicket : ticket._id
+            })
         })
 })
 

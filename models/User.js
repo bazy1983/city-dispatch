@@ -21,6 +21,15 @@ const UserSchema = new Schema({
         type: Number,
         default: 100
     },
+    notify : {
+        type: false
+    },
+    notifyText : {
+        type : String
+    },
+    notifyTicket : {
+        type : String
+    },
     email : {
         type: String
     },
