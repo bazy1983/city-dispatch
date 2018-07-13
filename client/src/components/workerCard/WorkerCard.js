@@ -23,12 +23,33 @@ const WorkerCard = (props) => (
                                     <p><strong>User Description:</strong> {props.desc}</p>
                                     <p><strong>Inspector Narratives:</strong> {props.inspectNarratives} </p>
                                 </div>
-                                : <p>{props.desc}</p>}
+                                : <div>
+                                    <p>{props.desc}</p>
+                                    {props.stepNumber === 4 ?
+                                        <form encType="multipart/form-data" id = "workerForm">
+                                            <div className="file-field input-field">
+                                                <div className="btn">
+                                                    <span>Upload Image</span>
+                                                    <input type="file" id="imgUpload" name = "file"/>
+                                                </div>
+                                                <div className="file-path-wrapper">
+                                                    <input className="file-path validate" type="text" />
+                                                </div>
+                                            </div>
+                                            <div className="input-field col s12">
+                                                <textarea id="narratives" className="materialize-textarea white-text"></textarea>
+                                                <label htmlFor="narratives">Narratives</label>
+                                            </div>
+                                        </form>
+                                        : null}
+                                </div>
+                            }
                         </div>
                         <div className="col s12 m3">
                             {props.stepNumber === 1 ?
                                 <div>
                                     <iframe
+                                        title={props._id}
                                         className="z-depth-3"
                                         width="150"
                                         height="150"
@@ -39,7 +60,7 @@ const WorkerCard = (props) => (
                                     </iframe>
                                     <img src={`/withfile/image/${props.imgBefore}`} alt="" width="150" height="150" className="materialboxed z-depth-3" />
                                 </div>
-                                : <img src={`/withfile/image/${props.imgName}`} alt="image" width="150" height="150"/>}
+                                : <img src={`/withfile/image/${props.imgName}`} alt="pothole" width="150" height="150" />}
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,8 @@ import API from "../../util/API";
 class UserDash extends Component {
     state = {
         weather: "",
-        showCreateTicket: false
+        showCreateTicket: false,
+        showAnnounce : true
     }
 
 
@@ -42,6 +43,7 @@ class UserDash extends Component {
             <div>
                 <UserProfile>
                     <li className="pointer"><a onClick={this.ShowComponentHandler.bind(this, "showCreateTicket")}><i className="material-icons" style={this.state.showCreateTicket ? { color: "red" } : null}>create</i>Report a Pothole</a></li>
+                    <li className="pointer"><a onClick={this.ShowComponentHandler.bind(this, "showAnnounce")}><i className="material-icons" style={this.state.showAnnounce ? { color: "red" } : null}>announcement</i>Announcements</a></li>
                     <li><a ><i className="material-icons" style={this.state.showCreateTicket ? { color: "red" } : null}>person</i>Edit Profile</a></li>
                     <li><div className="divider"></div></li>
                     <li><a ><i className="material-icons" style={this.state.showCreateTicket ? { color: "red" } : null}>check_box_outline_blank</i>View pending tickets</a></li>
@@ -53,7 +55,8 @@ class UserDash extends Component {
                     <li><a className="waves-effect" >Third Link With Waves</a></li>
                     <li><a className="subheader">Subheader</a></li>
                 </UserProfile>
-                <CityAnnounce />
+                {this.state.showAnnounce ?
+                    <CityAnnounce />  : null}
                 {this.state.showCreateTicket ?
                     <CreateTicket /> : null}
             </div>

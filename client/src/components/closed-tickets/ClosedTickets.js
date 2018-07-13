@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 const ClosedTickets = (props) => (
     <ul className="collection with-header z-depth-3">

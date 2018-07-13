@@ -12,7 +12,7 @@ const path = require("path");
 mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ServicesDB'
 
 //setup db to accept file uploads
-mongoose.connect(mongoURI)
+mongoose.connect(mongoURI, { useNewUrlParser: true })
 const conn = mongoose.connection;
 
 
@@ -85,12 +85,27 @@ router.get("/files", function (req, res) {
 
 router.post("/make-workflow-step", upload.single("file"), (req, res) => {
   let workflowStep = req.body;
-  workflowStep.imgName = req.file.filename;
+  workflowStep.imgName = req.file;
   console.log(workflowStep)
   db.Workflow.create(workflowStep)
     .then(() => {
       res.send("okay")
     })
+})
+
+router.post("/new-img", upload.single("file"), (req, res) => {
+  console.log(req.file.filename)
+  db.Ticket.findByIdAndUpdate(req.body.ticketId, {
+    imgAfter : req.file.filename,
+    workerNarratives : req.body.narratives
+  })
+  .then(()=>{
+    res.send("okay")
+  })
+  .catch((err)=>{
+    console.log(err);
+    res.status(404).end();
+  })
 })
 
 

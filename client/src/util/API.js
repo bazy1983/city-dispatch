@@ -46,7 +46,7 @@ export default {
     },
     closeOut : function(ticketId, employee){
         return axios.put("/api/closeTicket", {
-            id : ticketId,
+            ticketId : ticketId,
             employee : employee
         } )
     },
@@ -67,5 +67,15 @@ export default {
     },
     InspectedMonthCount : function(){
         return axios.get("/api/inspected-per-month")
+    },
+    uploadImg: function(imgAfter){
+        return axios({
+            url : "/withFile/new-img",
+            method : "post",
+            data: imgAfter,
+            contentType: false,
+            cache: false,
+            processData: false
+        })
     }
 }

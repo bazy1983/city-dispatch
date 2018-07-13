@@ -3,6 +3,13 @@ import "./inspectTicket.css";
 
 
 class InspectTickets extends Component {
+
+    // expandMedia = ()=>{
+    //     document.addEventListener('DOMContentLoaded', function() {
+    //         var elems = document.querySelectorAll('.materialboxed');
+    //         var instances = M.Materialbox.init(elems, options);
+    //       });
+    // }
     
     render() {
         return (
@@ -30,6 +37,7 @@ class InspectTickets extends Component {
                         <div className="col s12 m7">
                             <img className="materialboxed left" height="300" width="300" src={`/withfile/image/${this.props.img}`} alt="pothole" />
                             <iframe
+                                title={this.props._id}
                                 className="right"
                                 width="300"
                                 height="300"

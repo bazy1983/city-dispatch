@@ -28,7 +28,9 @@ class CityWorker extends Component {
         var parts = value.split("; _acc=");
         if (parts.length === 2) {
             id = parts.pop().split(";").shift().replace("j%3A%22", "").replace("%22", "");
-
+            if (id === "") {
+                window.location = "/work"
+            }
             API.getEmployee(id)
                 .then((worker) => {
                     // console.log(worker.data)
@@ -101,7 +103,12 @@ class CityWorker extends Component {
     nextStep = (step) => {
         let notes = document.querySelector("#narratives");
         if (notes) {
-            API.addNarratives(notes.value, this.state.oneTicket._id);
+            let FileUpload = new FormData (document.querySelector("#workerForm"))
+            FileUpload.append("narratives", notes.value)
+            FileUpload.append("ticketId", this.state.job._id)
+            API.uploadImg(FileUpload)
+            
+            // API.addNarratives(notes.value, this.state.oneTicket._id);
         }
         API.getStage(step, 2, this.state.job._id)
             .then((instructions) => {

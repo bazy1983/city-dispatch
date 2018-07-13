@@ -15,8 +15,8 @@ class CityAnnounce extends Component {
                             </div>
                         </div>
                         <div className="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
+                            <a >This is a link</a>
+                            <a >This is a link</a>
                         </div>
                     </div>
                 </div>
@@ -28,8 +28,8 @@ class CityAnnounce extends Component {
           I am convenient because I require little markup to use effectively.</p>
                         </div>
                         <div className="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
+                            <a >This is a link</a>
+                            <a >This is a link</a>
                         </div>
                     </div>
                 </div>

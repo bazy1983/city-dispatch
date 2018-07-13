@@ -165,9 +165,9 @@ router.get("/stage", (req, res)=>{
 //employee close out ticket
 router.put("/closeTicket", (req, res)=>{
     // console.log("hitting close")
-    console.log(req.body)
+    // console.log(req.body)
     if (req.body.employee === 1 ){
-        db.Ticket.findByIdAndUpdate(req.body.id, {
+        db.Ticket.findByIdAndUpdate(req.body.ticketId, {
             approved : true,
             dispatchable : true,
             inspecterOpen: false,
@@ -177,8 +177,13 @@ router.put("/closeTicket", (req, res)=>{
             //ADD USER REWARDS
         })
     } else if (req.body.employee === 2){
-        // console.log("city worker is trying to close out")
-        db.Ticket.findOneAndUpdate({_id : req.body.id}, {
+        let before = "";
+        // db.Ticket.findOne({_id : req.body.ticketId}, (err, job)=>{
+        //     if (err) console.log (err);
+        //     before = job.dispatchDate
+        // })
+        // console.log(before);
+        db.Ticket.findOneAndUpdate({_id : req.body.ticketId}, {
             closed : true,
             dispatchable : false,
             dispatchClose : new Date

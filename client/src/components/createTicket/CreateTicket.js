@@ -41,13 +41,23 @@ class CreateTicket extends Component {
                 let address = location.data.results.filter((el) => {
                     return el.geometry.location_type === "RANGE_INTERPOLATED"  //RANGE_INTERPOLATED
                 })
-                if(address){
+                if (address) {
                     let addressArr = address[0].formatted_address.split(", ")
                     console.log(addressArr)
                     document.querySelector("#street").value = addressArr[0];
                     document.querySelector("#city").value = addressArr[1];
-                    document.querySelector("#state").value = addressArr[2].substring(0,2);
+                    document.querySelector("#state").value = addressArr[2].substring(0, 2);
                     document.querySelector("#zip").value = addressArr[2].substring(3);
+                    this.setState({
+                        street: addressArr[0],
+                        city: addressArr[1],
+                        state: addressArr[2].substring(3),
+                        zip: addressArr[2].substring(3)
+                    })
+                    document.querySelector("#street").focus();
+                    document.querySelector("#city").focus();
+                    document.querySelector("#state").focus();
+                    document.querySelector("#zip").focus();
                 }
             })
         })
