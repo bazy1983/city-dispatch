@@ -1,77 +1,82 @@
 import axios from "axios";
 
 export default {
-    authenticate: function() {
+    weather: function (lat, long) {
+        return axios.get(`/api/getWeather/${lat}/${long}`)
+    },
+    authenticate: function () {
         return axios.get("/auth/authenticate-person")
     },
-    getUser : function(id) {
+    getUser: function (id) {
         return axios.get("/api/getUser/" + id);
     },
-    logout : function() {
+    logout: function () {
         return axios.get("/auth/logout")
     },
-    getTickets : function(employeeId) {
+    getTickets: function (employeeId) {
         return axios.get("/api/all-tickets/" + employeeId);
     },
-    getEmployee: function(id) {
+    getEmployee: function (id) {
         return axios.get("/api/getEmployee/" + id)
     },
-    dispatchOne : function(ticketId, inspectorId) {
+    dispatchOne: function (ticketId, inspectorId) {
         return axios.put("/api/dispatchOne", {
-            ticketId : ticketId,
-            inspectorId : inspectorId
+            ticketId: ticketId,
+            inspectorId: inspectorId
         })
     },
-    getStage : function(stage, employee, ticketId){
-        return axios.get("/api/stage",{params: {
-            flowFor : employee,
-            stepNumber : stage,
-            id : ticketId
-        }})
+    getStage: function (stage, employee, ticketId) {
+        return axios.get("/api/stage", {
+            params: {
+                flowFor: employee,
+                stepNumber: stage,
+                id: ticketId
+            }
+        })
     },
-    makeWorkflowStep: function(data){
+    makeWorkflowStep: function (data) {
         return axios({
-            url : "/withFile/make-workflow-step",
-            method : "post",
+            url: "/withFile/make-workflow-step",
+            method: "post",
             data: data,
             contentType: false,
             cache: false,
             processData: false
         })
     },
-    dismiss : function(ticketId){
+    dismiss: function (ticketId) {
         return axios.put("api/dismiss-ticket", {
-            id : ticketId
+            id: ticketId
         })
     },
-    closeOut : function(ticketId, employee){
+    closeOut: function (ticketId, employee) {
         return axios.put("/api/closeTicket", {
-            ticketId : ticketId,
-            employee : employee
-        } )
+            ticketId: ticketId,
+            employee: employee
+        })
     },
-    addNarratives: function(notes, ticketId){
+    addNarratives: function (notes, ticketId) {
         return axios.put("/api/narratives", {
-            notes : notes,
-            id : ticketId
+            notes: notes,
+            id: ticketId
         })
     },// Start of city worker methods
-    dispatchJob: function(employeeId){
-        return axios.get("/api/getOneJob/"+employeeId)
+    dispatchJob: function (employeeId) {
+        return axios.get("/api/getOneJob/" + employeeId)
     },
-    checkDispatch: function(employeeId){
+    checkDispatch: function (employeeId) {
         return axios.get("/api/check-dispatch/" + employeeId)
     },
-    ticketMonthCount : function(){
+    ticketMonthCount: function () {
         return axios.get("/api/tickets-per-month")
     },
-    InspectedMonthCount : function(){
+    InspectedMonthCount: function () {
         return axios.get("/api/inspected-per-month")
     },
-    uploadImg: function(imgAfter){
+    uploadImg: function (imgAfter) {
         return axios({
-            url : "/withFile/new-img",
-            method : "post",
+            url: "/withFile/new-img",
+            method: "post",
             data: imgAfter,
             contentType: false,
             cache: false,

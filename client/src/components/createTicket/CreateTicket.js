@@ -99,7 +99,7 @@ class CreateTicket extends Component {
 
     render() {
         return (
-            <div className="row container">
+            <div className="row container rotate">
                 <div>
                     <h3 className="left-align">Report a pothole</h3>
                 </div>

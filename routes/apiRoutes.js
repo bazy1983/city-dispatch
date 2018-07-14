@@ -39,8 +39,8 @@ router.get("/getUser/:id", (req, res) => {
 //get weather information
 router.get("/getWeather/:lat/:log", (req, res) => {
     // console.log(req.params)
-    let URI = "https://api.openweathermap.org/data/2.5/weather?";
-    let key = "&appid=" + keys.weather;
+    let URI = "https://api.openweathermap.org/data/2.5/forecast?";
+    let key = "&appid=" + keys;
     let coord = `lat=${req.params.lat}&lon=${req.params.log}`
     let units = "&units=imperial"
     request(URI + coord + key + units, (err, response, body) => {
@@ -51,21 +51,6 @@ router.get("/getWeather/:lat/:log", (req, res) => {
     })
 })
 
-// // function handle what ticket to send
-// let processAndSendTicket = (ticket, res)=>{
-//     console.log(Array.isArray(ticket))
-//     if (!Array.isArray(ticket)){
-//         if (ticket != null) {
-//             res.status(200).json(ticket)
-//         }
-//     }else{
-//         res.status(200).json(ticket)
-//     }
-// }
-// let sendError = (err)=>{
-//     res.status(404).send({err: "could not process request"})
-//     console.log(err)
-// }
 
 //get open ticket for inspector view OR get all ticket
 router.get("/all-tickets/:inspectorId", (req, res) => {

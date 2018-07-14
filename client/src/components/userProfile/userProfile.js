@@ -27,20 +27,25 @@ class UserProfile extends Component {
         }
     }
 
+    RedeemPoints = () => {
+        console.log("got gift card")
+    }
+
+    displayToast = () => {
+        document.querySelector(".toast").classList.add("slideOut");
+        setTimeout(() => {
+            document.querySelector(".toast").classList.remove("slideOut");
+        }, 3);
+    }
+
     render() {
         return (
             <div>
 
-                <nav className="topMargin">
-                    <div className="nav-wrapper light-blue darken-3">
-                        <a href="#" className="brand-logo center">Logo</a>
-                        <ul id="nav-mobile" className="right hide-on-med-and-down">
-                            <li><a href="sass.html">Sass</a></li>
-                            <li><a href="badges.html">Components</a></li>
-                            <li><a href="collapsible.html">JavaScript</a></li>
-                        </ul>
-                    </div>
-                </nav>
+                <div style={{ transform: "translateY(30px)" }}>
+                    <img id="logo" src="./images/pothole.png" alt="pothole patchers" />
+                </div>
+
                 {/* <a href="#" data-target="slide-out" class="btn-floating btn-medium light-blue darken-3 sidenav-trigger"><i class="material-icons">menu</i></a> */}
                 <a href="#" data-target="slide-out" className="sidenav-trigger">
                     <i className="medium material-icons leftSide">chevron_right</i>
@@ -57,10 +62,20 @@ class UserProfile extends Component {
                             <a ><strong className="white-text email">{this.state.email}</strong></a>
                         </div>
                     </li>
+                    <li
+                        className={this.state.points === 1000 ? "pointer" : "pointer disabled"}
+                        onClick={this.state.points === 1000 ? this.RedeemPoints : this.displayToast}>
+                        <a >
+                            <i
+                                className="material-icons"
+                                style={this.state.showCreateTicket ? { color: "red" } : null}>attach_money
+                        </i>Points: {this.state.points}/1000</a></li>
                     {this.props.children}
                 </ul>
 
-
+                <div className="toast">
+                    <p>You need 1000 points!</p>
+                </div>
             </div>
         )
     }

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import API from "../../util/API";
 import axios from "axios";
 
 class StageBuilder extends Component {

@@ -6,20 +6,15 @@ nav {
 #logo {
     transform: translateY(-37px);
     width: 580px;
-    animation: 0.5s movingGlow linear infinite;
+    animation: 3s movingGlow linear infinite;
 }
 
 @keyframes movingGlow {
     0% , 100% {
-        filter : drop-shadow(0px 5px 5px #53caff)
+        filter : drop-shadow(0px 0px 2px #53caff)
     }
-    25% {
-        filter : drop-shadow(5px 0px 5px #53caff)
-    }
+
     50% {
-        filter : drop-shadow(0px -5px 5px #53caff)
-    }
-    75% {
-        filter : drop-shadow(-5px 0px 5px #53caff)
+        filter : drop-shadow(0px 0px 10px #53caff)
     }
 }
