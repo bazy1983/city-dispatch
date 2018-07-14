@@ -10,7 +10,12 @@ const ClosedTickets = (props) => (
                         className="collection-item left-align"
                         key={el._id}
                     >
-                    <i className="material-icons fixCloseedIcons">assignment</i> {el.street}, {el.city}, {el.state}, {el.zip}
+                        <div className="left">
+                            <i className="material-icons">assignment</i> <span style={{position: "relative",top: "-7px"}}>{el.street}, {el.city}, {el.state}, {el.zip}</span>
+                        </div>
+                        <div className="right">
+                            <span> Duration: {el.dispatchDuration} hours</span>
+                        </div>
                     </li>
                 )
             })

@@ -48,7 +48,7 @@ class Weather extends Component {
                 </div>
                 <div className="header-bottom">
                     {this.state.weather.map((el, i) => {
-                        if (i === 4 || i === 20) {
+                        if (i === 0 || i === 16) {
                             return (
                                 <div className="header-bottom1" key={i}>
                                     <div className="header-head">
@@ -62,7 +62,7 @@ class Weather extends Component {
                                     </div>
                                 </div>
                             )
-                        } else if (i === 12 || i === 28) {
+                        } else if (i === 8 || i === 24) {
                             return (
                                 <div className="header-bottom1 header-bottom2" key={i}>
                                     <div className="header-head">

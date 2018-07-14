@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./userProfile.css"
 import API from "../../util/API";
+
+
 class UserProfile extends Component {
     state = {
         fullname: "",
@@ -73,9 +75,7 @@ class UserProfile extends Component {
                     {this.props.children}
                 </ul>
 
-                <div className="toast">
-                    <p>You need 1000 points!</p>
-                </div>
+                
             </div>
         )
     }

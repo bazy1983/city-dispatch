@@ -5,7 +5,7 @@ import CityAnnounce from "../../components/userProfile-Announce";
 import CreateTicket from "../../components/createTicket/CreateTicket";
 import API from "../../util/API";
 import "./userDash.css";
-import { throws } from "assert";
+import Toast from "../../components/toast";
 
 
 class UserDash extends Component {
@@ -43,6 +43,7 @@ class UserDash extends Component {
         return (
 
             <div>
+                <Toast/>
                 <UserProfile>
                     {/* points can be found in userprofile component */}
                     <li className="pointer"><a className="waves-effect waves-purple" onClick={this.ShowComponentHandler.bind(this, "showCreateTicket")}><i className="material-icons" style={this.state.showCreateTicket ? { color: "red" } : null}>create</i>Report a Pothole</a></li>
@@ -55,13 +56,13 @@ class UserDash extends Component {
                     <li><div className="divider"></div></li>
                     <li><a className="waves-effect waves-purple"><i className="material-icons">insert_chart</i>Stats</a></li>
                     <li><a className="waves-effect waves-purple" href="/" onClick={this.signout}><i className="material-icons">exit_to_app</i>Signout</a></li>
-                    <li><a className="waves-effect waves-purple" >Third Link With Waves</a></li>
+                    
                     
                 </UserProfile>
                 {this.state.showAnnounce ?
                     <CityAnnounce />  : null}
                 {this.state.showCreateTicket ?
-                    <CreateTicket /> : null}
+                    <CreateTicket ShowComponentHandler = {this.ShowComponentHandler}/> : null}
             </div>
 
         )

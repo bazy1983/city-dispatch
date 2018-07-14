@@ -58,6 +58,7 @@ class CreateTicket extends Component {
                     document.querySelector("#city").focus();
                     document.querySelector("#state").focus();
                     document.querySelector("#zip").focus();
+                    
                 }
             })
         })
@@ -92,14 +93,16 @@ class CreateTicket extends Component {
             processData: false
         })
             .then((result) => {
-                console.log(result)
+                // console.log(result)
+                document.querySelector(".toast").classList.add("slideUp");
+                this.props.ShowComponentHandler("showCreateTicket");
             });
 
     }
 
     render() {
         return (
-            <div className="row container rotate">
+            <div className="row container">
                 <div>
                     <h3 className="left-align">Report a pothole</h3>
                 </div>
