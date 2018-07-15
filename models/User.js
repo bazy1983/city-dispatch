@@ -19,13 +19,15 @@ const UserSchema = new Schema({
     },
     points : {
         type: Number,
-        default: 100
+        default: 500
     },
     notify : {
-        type: false
+        type: Boolean,
+        default : false
     },
     notifyText : {
-        type : String
+        type : String,
+        default : ""
     },
     notifyTicket : {
         type : String

@@ -51,7 +51,7 @@ class CreateTicket extends Component {
                     this.setState({
                         street: addressArr[0],
                         city: addressArr[1],
-                        state: addressArr[2].substring(3),
+                        state: addressArr[2].substring(0, 2),
                         zip: addressArr[2].substring(3)
                     })
                     document.querySelector("#street").focus();

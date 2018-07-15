@@ -7,7 +7,8 @@ import moment from "moment";
 class Weather extends Component {
 
     state = {
-        weather: []
+        weather: [],
+        loading : true
     }
 
     componentDidMount() {
@@ -17,7 +18,7 @@ class Weather extends Component {
             // console.log(lat, long)
             API.weather(lat, long)
                 .then((weather) => {
-                    console.log(weather.data.list)
+                    // console.log(weather.data.list)
                     let weatherRefined = weather.data.list.map((el) => {
                         return ({
                             weatherDesc: el.weather[0].main,
@@ -27,8 +28,8 @@ class Weather extends Component {
                         })
                     })
 
-                    this.setState({ weather: weatherRefined })
-                    console.log(this.state)
+                    this.setState({ weather: weatherRefined, loading : false })
+                    // console.log(this.state)
 
                 })
         })
@@ -47,6 +48,11 @@ class Weather extends Component {
                     <div className="clear"> </div>
                 </div>
                 <div className="header-bottom">
+                    {this.state.loading?
+                    <div className="header-bottom1 loadingImg">
+                        <img src="./images/weatherloading.gif" alt="loading"/>
+                    </div>
+                    :null}
                     {this.state.weather.map((el, i) => {
                         if (i === 0 || i === 16) {
                             return (

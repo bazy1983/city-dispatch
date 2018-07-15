@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./userProfile.css"
 import API from "../../util/API";
+import NotifyUser from "../../components/notify-user";
 
 
 class UserProfile extends Component {
@@ -21,7 +22,7 @@ class UserProfile extends Component {
             API.getUser(id)
                 .then((user) => {
                     this.setState({ ...user.data })
-                    // console.log(this.state)
+                    console.log(this.state)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -74,7 +75,9 @@ class UserProfile extends Component {
                         </i>Points: {this.state.points}/1000</a></li>
                     {this.props.children}
                 </ul>
-
+                {this.state.notify?
+                <NotifyUser message = {this.state.text}/>
+                :null}
                 
             </div>
         )

@@ -208,3 +208,9 @@ h1 {
     padding: 3em 0;
 }
 }
+
+.loadingImg {
+    text-align: center;
+    padding: 70px 0px;
+    transform: translateX(145%);
+}

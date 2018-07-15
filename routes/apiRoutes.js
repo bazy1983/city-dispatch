@@ -22,13 +22,16 @@ router.get("/getUser/:id", (req, res) => {
     // console.log(req.params.id)
     db.User.findById(req.params.id)
         .then((user) => {
-            let { username, fullname, points, email, _id } = user //destructuring user object
+
             res.json({
-                username: username,
-                fullname: fullname,
-                points: points,
-                email: email,
-                id: _id
+                username: user.username,
+                fullname: user.fullname,
+                points: user.points,
+                email: user.email,
+                id: user._id,
+                notify : user.notify,
+                text : user.notifyText,
+                notifyTicket : user.notifyTicket
             })
         })
         .catch((err) => {
@@ -160,11 +163,15 @@ router.put("/closeTicket", (req, res) => {
         })
             .then((ticket) => {
                 //ADD USER REWARDS
+                console.log("should reward user")
                 db.User.findOneAndUpdate({_id : ticket.userId},{
                     $inc : {points : 50 },
                     notify : true,
                     notifyText : "Your Ticket is Approved, you got 50 points..",
                     notifyTicket : ticket._id
+                })
+                .then(()=>{
+                    console.log("added notification")
                 })
             })
     } else if (req.body.employee === 2) {
@@ -254,7 +261,7 @@ router.get("/getOneJob/:employeeId", (req, res) => {
         })
 })
 
-router.get("/check-dispatch/:id", (req, res) => {
+router.get("/check-dispatch/:id", (req, res) => { //serves open ticket. if not, get closed tickets
     let dateInfo = today();
     // find open ticket 
     db.Ticket.findOne({
@@ -274,16 +281,6 @@ router.get("/check-dispatch/:id", (req, res) => {
                     dispatchDate: { $gte: new Date(dateInfo.thisYear, dateInfo.thisMonth, dateInfo.thisDay) }
                 })
                     .then((closeJobsOfTheDay) => {
-
-                        // closeJobsOfTheDay.map((el)=> { //calculate dispatch duration
-                        //     let before = new moment (el.dispatchDate);
-                        //     let after = new moment (el.dispatchClose);
-                        //     let duration = moment.duration(after.diff(before));
-                        //     let hours = duration.asHours().toFixed(2);
-                        //     el.dispatchDuration = hours;
-                        //     return el
-                        // })
-                        // console.log(closeJobsOfTheDay)
                         res.json(closeJobsOfTheDay);
                     })
             }

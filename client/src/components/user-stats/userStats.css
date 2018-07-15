@@ -1,0 +1,42 @@
+.marginDown {
+    margin-top: 50px;
+}
+
+.box {
+    width: 95%;
+    background: #fff;
+    padding: 10px;
+    position: relative;
+    border-radius: 3px;
+}
+
+.boxLogo {
+    position: absolute;
+    top: -44px;
+    padding: 10px;
+}
+
+.boxContext{
+    text-align: right;
+    color: #555;
+}
+
+.boxContext h2 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.boxInfo {
+    text-align: left;
+}
+
+.boxInfo i {
+    top: 6px;
+    position: relative;
+    animation: 5s spin reverse infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
