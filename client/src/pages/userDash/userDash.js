@@ -10,11 +10,13 @@ import UserStats from "../../components/user-stats";
 
 
 
+
 class UserDash extends Component {
     state = {
         showCreateTicket: false,
         showAnnounce: true,
         showStats: false,
+        id : "",
         stats: ""
     }
 
@@ -36,6 +38,7 @@ class UserDash extends Component {
             })
     }
 
+
     ShowComponentHandler = (stateProp) => {
         this.setState({ [stateProp]: !this.state[stateProp] })
         if (stateProp === "showStats" && !this.state.showStats) {
@@ -47,7 +50,7 @@ class UserDash extends Component {
                 // console.log(userId)
                 API.getStats(userId)
                     .then((stats) => {
-                        this.setState({ stats: stats.data })
+                        this.setState({ stats: stats.data, id : userId })
                     })
             }
         }
@@ -68,7 +71,7 @@ class UserDash extends Component {
                     <li><a className="waves-effect waves-purple" ><i className="material-icons" style={this.state.showCreateTicket ? { color: "red" } : null}>person</i>Edit Profile</a></li>
                     <li><a className="waves-effect waves-purple" onClick={this.ShowComponentHandler.bind(this, "showStats")}><i className="material-icons" style={this.state.showStats ? { color: "red" } : null}>insert_chart</i>Stats</a></li>
                     <li><a className="waves-effect waves-purple" href="/" onClick={this.signout}><i className="material-icons">exit_to_app</i>Signout</a></li>
-
+                    
 
                 </UserProfile>
                 {this.state.showAnnounce ?
@@ -100,6 +103,9 @@ class UserDash extends Component {
                         </div>
                     </div>
                     : null}
+                    
+                    
+                    
             </div>
 
         )

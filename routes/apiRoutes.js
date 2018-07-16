@@ -219,7 +219,7 @@ router.put("/dismiss-ticket", (req, res) => {
             res.send("okay")
             //punish user!!
             db.User.findOneAndUpdate({_id : ticket.userId},{
-                $inc : {points : 50 },
+                $inc : {points : -50 },
                 notify : true,
                 notifyText : "Your Ticket is denied, you lost 50 points..",
                 notifyTicket : ticket._id
@@ -352,6 +352,19 @@ router.put("/clear-notification", (req, res)=>{
     .catch((err)=>{
         console.log(err);
         res.status(500).end();
+    })
+})
+
+router.put ("/resetPoints", (req, res)=>{
+    db.User.findByIdAndUpdate(req.body.userId, {
+        $inc : {points : -1000 }
+    }, {new :true})
+    .then((user)=>{
+        res.json({points : user.points})
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(500).end()
     })
 })
 

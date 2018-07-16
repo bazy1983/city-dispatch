@@ -92,5 +92,12 @@ export default {
             method : "put",
             data : {userId : userId}
         })
+    },
+    resetPoints: function(userId){
+        return axios({
+            url : "/api/resetPoints",
+            method : "put",
+            data : {userId : userId}
+        })
     }
 }

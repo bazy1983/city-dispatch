@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./userProfile.css"
 import API from "../../util/API";
 import NotifyUser from "../../components/notify-user";
+import GiftCard from "../../components/gift-card";
 
 
 class UserProfile extends Component {
@@ -31,7 +32,13 @@ class UserProfile extends Component {
     }
 
     RedeemPoints = () => {
-        console.log("got gift card")
+        // console.log("got gift card")
+        document.querySelector(".gift").classList.add("slideIn")
+    }
+
+    closeGiftCard = () => {
+        // console.log("got gift card")
+        document.querySelector(".gift").classList.remove("slideIn")
     }
 
     displayToast = () => {
@@ -41,10 +48,28 @@ class UserProfile extends Component {
         }, 3);
     }
 
+    getGiftCardNumber = () => {
+        let number = "";
+        for (let i = 0; i < 20; i++) {
+            let random = Math.floor(Math.random() * 9)
+            if (i === 4 || i === 10 || i === 15) {
+                random = "-"
+                number += random
+            } else {
+                number += random
+            }
+        }
+        document.querySelector(".number").textContent = number
+        API.resetPoints(this.state.id)//user id
+        .then((points)=>{
+            console.log(points.data)
+            this.setState({points : points.data.points})
+        })
+    }
+
     render() {
         return (
             <div>
-
                 <div style={{ transform: "translateY(30px)" }}>
                     <img id="logo" src="./images/pothole.png" alt="pothole patchers" />
                 </div>
@@ -66,19 +91,22 @@ class UserProfile extends Component {
                         </div>
                     </li>
                     <li
-                        className={this.state.points === 1000 ? "pointer" : "pointer disabled"}
-                        onClick={this.state.points === 1000 ? this.RedeemPoints : this.displayToast}>
+                        className={this.state.points >= 1000 ? "pointer" : "pointer disabled"}
+                        onClick={this.state.points >= 1000 ? this.RedeemPoints : this.displayToast}>
                         <a >
                             <i
                                 className="material-icons"
                                 style={this.state.showCreateTicket ? { color: "red" } : null}>attach_money
-                        </i>Points: {this.state.points}/1000</a></li>
+                            </i>Points: {this.state.points}/1000
+                        </a>
+                    </li>
                     {this.props.children}
+
                 </ul>
-                {this.state.notify?
-                <NotifyUser message = {this.state.text} userId = {this.state.id}/>
-                :null}
-                
+                {this.state.notify ?
+                    <NotifyUser message={this.state.text} userId={this.state.id} />
+                    : null}
+                    <GiftCard cardNumber={this.getGiftCardNumber} points = {this.state.points} close = {this.closeGiftCard} />
             </div>
         )
     }
