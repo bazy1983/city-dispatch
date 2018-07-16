@@ -22,7 +22,7 @@ class UserProfile extends Component {
             API.getUser(id)
                 .then((user) => {
                     this.setState({ ...user.data })
-                    console.log(this.state)
+                    // console.log(this.state)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -76,7 +76,7 @@ class UserProfile extends Component {
                     {this.props.children}
                 </ul>
                 {this.state.notify?
-                <NotifyUser message = {this.state.text}/>
+                <NotifyUser message = {this.state.text} userId = {this.state.id}/>
                 :null}
                 
             </div>

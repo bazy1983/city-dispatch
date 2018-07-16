@@ -312,4 +312,47 @@ router.get("/inspected-per-month", (req, res) => {
         })
 })
 
+router.get("/stats/:userId", (req, res)=>{
+    db.Ticket.find({
+        userId : req.params.userId
+    })
+    .then((tickets)=>{
+        let approved = 0, rejected = 0, pending = 0
+        tickets.forEach((el) => {
+            if (el.assignedToInspector && el.approved){
+                approved++
+            } else if (el.assignedToInspector && !el.approved){
+                rejected ++
+            } else {
+                pending++
+            }
+        });
+        res.json({
+            total : tickets.length,
+            approved : approved,
+            rejected : rejected,
+            pending : pending
+        })
+
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.status(404).end();
+    })
+})
+
+router.put("/clear-notification", (req, res)=>{
+    db.User.findByIdAndUpdate(req.body.userId, {
+        notify : false,
+        notifyText : ""
+    })
+    .then(()=>{
+        res.status(200).end();
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(500).end();
+    })
+})
+
 module.exports = router

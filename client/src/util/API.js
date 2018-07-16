@@ -82,5 +82,15 @@ export default {
             cache: false,
             processData: false
         })
+    },
+    getStats: function(userId) {
+        return axios.get("/api/stats/" + userId)
+    },
+    clearNotification : function(userId){
+        return axios({
+            url : "/api/clear-notification",
+            method : "put",
+            data : {userId : userId}
+        })
     }
 }

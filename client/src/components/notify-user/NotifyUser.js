@@ -1,11 +1,18 @@
 import React from "react";
 import "./notifyUser.css";
-
+import API from "../../util/API"
+//this component is imported by userPorfile component
 
 
 class NotifyUser extends React.Component {
     expandMessage = () => {
-        document.querySelector(".notifyText").classList.toggle("expandWidth")
+        document.querySelector(".notifyText").classList.toggle("expandWidth");
+        API.clearNotification(this.props.userId)
+        .then (()=>{
+            setTimeout(() => {
+                document.querySelector(".notify").classList.add("hidden")
+            }, 1000);
+        })
     }
 
     render() {

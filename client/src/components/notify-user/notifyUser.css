@@ -3,6 +3,7 @@
     bottom: 10vh;
     right: 10vw;
     float: right;
+    transition: 5s;
 }
 
 .notifyText {
@@ -55,4 +56,8 @@
     41% { transform: rotate(1deg); }
     43% { transform: rotate(0); }
     100% { transform: rotate(0); }
+  }
+
+  .hidden {
+      opacity: 0;
   }

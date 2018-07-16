@@ -12,10 +12,10 @@ import UserStats from "../../components/user-stats";
 
 class UserDash extends Component {
     state = {
-        weather: [],
         showCreateTicket: false,
         showAnnounce: true,
-        showStats : false
+        showStats: false,
+        stats: ""
     }
 
 
@@ -38,6 +38,19 @@ class UserDash extends Component {
 
     ShowComponentHandler = (stateProp) => {
         this.setState({ [stateProp]: !this.state[stateProp] })
+        if (stateProp === "showStats" && !this.state.showStats) {
+            let userId;
+            var value = "; " + document.cookie;
+            var parts = value.split("; _acc=");
+            if (parts.length === 2) {
+                userId = parts.pop().split(";").shift().replace("j%3A%22", "").replace("%22", "");
+                // console.log(userId)
+                API.getStats(userId)
+                    .then((stats) => {
+                        this.setState({ stats: stats.data })
+                    })
+            }
+        }
     }
 
 
@@ -62,22 +75,31 @@ class UserDash extends Component {
                     <CityAnnounce /> : null}
                 {this.state.showCreateTicket ?
                     <CreateTicket ShowComponentHandler={this.ShowComponentHandler} /> : null}
-                {this.state.showStats?
-                <div className="container marginDown">
-                    <div className="row">
-                        <UserStats 
-                        icon = "check_box_outline_blank" 
-                        iconColor= "blue lighten-2"/>
-                        
-                        <UserStats 
-                        icon = "check" 
-                        iconColor= "green lighten-2"/>
-                        <UserStats 
-                        icon = "clear" 
-                        iconColor= "red  lighten-2"/>
+                {this.state.showStats ?
+                    <div className="container marginDown">
+                        <div className="row">
+                            <UserStats
+                                icon="check"
+                                iconColor="green lighten-2"
+                                tag="Approved"
+                                total={this.state.stats.total}
+                                count={this.state.stats.approved} />
+
+                            <UserStats
+                                icon="clear"
+                                iconColor="red lighten-2"
+                                tag="Rejected"
+                                total={this.state.stats.total}
+                                count={this.state.stats.rejected} />
+                            <UserStats
+                                icon="check_box_outline_blank"
+                                iconColor="blue lighten-2"
+                                tag="Pending"
+                                total={this.state.stats.total}
+                                count={this.state.stats.pending} />
+                        </div>
                     </div>
-                </div>
-                :null}
+                    : null}
             </div>
 
         )
