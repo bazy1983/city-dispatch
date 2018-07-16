@@ -25,7 +25,7 @@ const WorkerCard = (props) => (
                                 </div>
                                 : <div>
                                     <p>{props.desc}</p>
-                                    {props.stepNumber === 4 ?
+                                    {props.stepNumber === 5 ?
                                         <form encType="multipart/form-data" id = "workerForm">
                                             <div className="file-field input-field">
                                                 <div className="btn">
