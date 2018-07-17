@@ -33,7 +33,7 @@ class Signup extends Component {
                         </div>
                         <div className="card-action right-align">
                             {/* <input type="reset" id="reset" className="btn-flat grey-text waves-effect" /> */}
-                            <input type="submit" className="btn green waves-effect waves-light" value="Login" />
+                            <input type="submit" className="btn green waves-effect waves-light" value="Register" />
                         </div>
                     </form>
                     {this.props.children}

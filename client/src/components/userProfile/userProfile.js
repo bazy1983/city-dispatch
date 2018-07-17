@@ -98,7 +98,7 @@ class UserProfile extends Component {
                             <div className="background">
                                 <img src="./images/sidebar.jpg" alt="" width="300px" height="200px" />
                             </div>
-                            <a ><img className="circle" src={`/withFile/image/${this.state.avatar}`||"./images/person.jpg"} alt="" /></a>
+                            <a ><img className="circle" src={this.state.avatar?`/withFile/image/${this.state.avatar}`:"./images/person.jpg"} alt="" /></a>
                             <a ><strong className="white-text name">{this.state.fullname}</strong></a>
                             <a ><strong className="white-text email">{this.state.email}</strong></a>
                         </div>

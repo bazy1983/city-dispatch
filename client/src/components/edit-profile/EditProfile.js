@@ -5,7 +5,8 @@ import API from "../../util/API";
 class EditProfile extends React.Component {
     state = {
         fullnameEdit: false,
-        emailEdit: false
+        emailEdit: false,
+        showDelete : false
     }
 
     inputToggler = (input) => {
@@ -35,12 +36,35 @@ class EditProfile extends React.Component {
         this.setState({ [input]: !this.state[input] });
     }
 
+    onDeleteActivator = (e) => { //changes delete button color
+        // console.log(e.target.value)
+        if (e.target.value === "DELETE"){
+            document.querySelector("#deleteBtn").classList.remove("orange", "lighten-2")
+            document.querySelector("#deleteBtn").classList.add("red", "darken-2");
+        } else {
+            document.querySelector("#deleteBtn").classList.remove("red", "darken-2");
+            document.querySelector("#deleteBtn").classList.add("orange", "lighten-2");
+        }
+    }
+
+    onDeleteHandler = () => {
+        let classCheck = document.querySelector("#deleteBtn").classList.contains("red")
+        if (classCheck) {
+            API.deleteAccount(this.props.id)
+            .then(()=>{
+                window.location = "/";
+            })
+        } else {
+            this.setState({showDelete : true});
+        }
+    }
+
     render() {
         return (
             <div className="container row">
                 <div className="col s12 l6 offset-l3 row white hoverable z-depth-2 editCard">
                     <form action="" encType="multipart/form-data" id= "imgchange">
-                        <img src={`/withFile/image/${this.props.avatar}`||"./images/sidebar.jpg"} alt="" height="100" width="100" className="circle reposition" />
+                        <img src={this.props.avatar?`/withFile/image/${this.props.avatar}`:"./images/person.jpg"} alt="" height="100" width="100" className="circle reposition" />
                         <input type="file" name = "file" onChange = {this.imgChange}/>
                     </form>
                     <br />
@@ -74,6 +98,10 @@ class EditProfile extends React.Component {
                                 <i className="material-icons right pointer" onClick={this.inputToggler.bind(this, "emailEdit")}>edit</i>
                             </div>
                         }
+                        <br/>
+                        <br/>
+                        <a className="waves-effect waves-light btn orange lighten-2 left" id="deleteBtn" onClick={this.onDeleteHandler}>Delete Account</a>
+                        <input type="text" placeholder="Type in DELETE to continue" onChange={this.onDeleteActivator} id="deleteInput"/>
                     </div>
                 </div>
 

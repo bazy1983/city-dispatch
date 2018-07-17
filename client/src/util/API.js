@@ -113,5 +113,13 @@ export default {
             cache: false,
             processData: false
         })
+    },
+    deleteAccount : function(userId){
+        console.log(userId)
+        return axios({
+            url : "/auth/delete-account", 
+            data : {userId : userId},
+            method : "delete"
+        } )
     }
 }

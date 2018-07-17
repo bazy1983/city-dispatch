@@ -42,6 +42,17 @@ module.exports = function (passport) {
         res.cookie("_acc", "")
         res.status(200).end();
     });
+
+    router.delete("/delete-account/", (req, res)=>{
+        db.User.findByIdAndRemove({_id : req.body.userId})
+        .then(()=>{
+            res.status(200).end()
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(404).end()
+        })
+    })
     //USER AUTHENTICATION ENDS
 
     //EMPLOYEE AUTHENTICATION STARTS
