@@ -18,7 +18,7 @@ bcrypt for password encryption and hashing.
 other dependencies to make file storage to mongodb possible.
 ReactJS for front-end user interface.
 MaterializeCSS for layouts and components.
-``
+```
 APIs used:
 ```
 Google Maps API to show map box in the ticket.
