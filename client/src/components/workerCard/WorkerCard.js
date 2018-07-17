@@ -20,7 +20,7 @@ const WorkerCard = (props) => (
                                     <p><strong>Length:</strong> {props.length} </p>
                                     <p><strong>Width:</strong> {props.width} </p>
                                     <p><strong>Depth:</strong> {props.depth} </p>
-                                    <p><strong>User Description:</strong> {props.desc}</p>
+                                    {/* <p><strong>User Description:</strong> {props.desc}</p> */}
                                     <p><strong>Inspector Narratives:</strong> {props.inspectNarratives} </p>
                                 </div>
                                 : <div>

@@ -16,6 +16,7 @@ const ClosedTickets = (props) => (
                         <div className="right">
                             <span> Duration: {el.dispatchDuration} hours</span>
                         </div>
+                        <div style={{clear : "both"}}></div>
                     </li>
                 )
             })
