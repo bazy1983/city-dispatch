@@ -108,6 +108,19 @@ router.post("/new-img", upload.single("file"), (req, res) => {
   })
 })
 
+router.post("/user-img", upload.single("file"), (req, res)=>{
+  db.User.findByIdAndUpdate(req.body.userId, {
+    avatar : req.file.filename
+  }, {new : true})
+  .then((user)=>{
+    res.json({avatar : user.avatar});
+  })
+  .catch((err)=>{
+    console.log(err)
+    res.status(404).end();
+  })
+})
+
 
 
 

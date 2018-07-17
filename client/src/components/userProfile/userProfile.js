@@ -3,6 +3,7 @@ import "./userProfile.css"
 import API from "../../util/API";
 import NotifyUser from "../../components/notify-user";
 import GiftCard from "../../components/gift-card";
+import EditProfile from "../../components/edit-profile";
 
 
 class UserProfile extends Component {
@@ -33,12 +34,18 @@ class UserProfile extends Component {
 
     RedeemPoints = () => {
         // console.log("got gift card")
-        document.querySelector(".gift").classList.add("slideIn")
+        document.querySelector(".gift").classList.remove("hide-gift");
+        setTimeout(() => {
+            document.querySelector(".gift").classList.add("slideIn");
+        }, 100);
     }
 
     closeGiftCard = () => {
         // console.log("got gift card")
-        document.querySelector(".gift").classList.remove("slideIn")
+        document.querySelector(".gift").classList.remove("slideIn");
+        setTimeout(() => {
+            document.querySelector(".gift").classList.add("hide-gift");
+        }, 1500);
     }
 
     displayToast = () => {
@@ -46,6 +53,12 @@ class UserProfile extends Component {
         setTimeout(() => {
             document.querySelector(".toast").classList.remove("slideOut");
         }, 3);
+    }
+
+    rerenderUserInfo = (user) => {
+        console.log(user)
+        this.setState({...user})
+        console.log(this.state)
     }
 
     getGiftCardNumber = () => {
@@ -62,7 +75,7 @@ class UserProfile extends Component {
         document.querySelector(".number").textContent = number
         API.resetPoints(this.state.id)//user id
         .then((points)=>{
-            console.log(points.data)
+            // console.log(points.data)
             this.setState({points : points.data.points})
         })
     }
@@ -85,7 +98,7 @@ class UserProfile extends Component {
                             <div className="background">
                                 <img src="./images/sidebar.jpg" alt="" width="300px" height="200px" />
                             </div>
-                            <a ><img className="circle" src="./images/person.jpg" alt="" /></a>
+                            <a ><img className="circle" src={`/withFile/image/${this.state.avatar}`||"./images/person.jpg"} alt="" /></a>
                             <a ><strong className="white-text name">{this.state.fullname}</strong></a>
                             <a ><strong className="white-text email">{this.state.email}</strong></a>
                         </div>
@@ -103,6 +116,9 @@ class UserProfile extends Component {
                     {this.props.children}
 
                 </ul>
+                {this.props.showUser?
+                <EditProfile {...this.state} rerender = {this.rerenderUserInfo}/>
+                :null}
                 {this.state.notify ?
                     <NotifyUser message={this.state.text} userId={this.state.id} />
                     : null}

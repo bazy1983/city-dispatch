@@ -13,6 +13,7 @@
     opacity: 0;
     transition: 1s;
     position: absolute;
+
 }
 
 .gift label {
@@ -44,4 +45,8 @@
     top: -10px;
     left: -10px;
     cursor: pointer;
+}
+
+.hide-gift {
+    display: none;
 }

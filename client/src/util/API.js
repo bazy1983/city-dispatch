@@ -99,5 +99,19 @@ export default {
             method : "put",
             data : {userId : userId}
         })
+    },
+    updateUserInfo: function(userId, field, text){
+        // console.log(userId, field, text)
+        return axios.put("/api/update-user", {userId : userId, field : field, text : text})
+    },
+    changeImg : function(img){
+        return axios({
+            url: "/withFile/user-img",
+            method: "post",
+            data: img,
+            contentType: false,
+            cache: false,
+            processData: false
+        })
     }
 }

@@ -96,6 +96,7 @@ class CreateTicket extends Component {
                 // console.log(result)
                 document.querySelector(".toast").classList.add("slideUp");
                 this.props.ShowComponentHandler("showCreateTicket");
+                this.props.ShowComponentHandler("showAnnounce");
             });
 
     }

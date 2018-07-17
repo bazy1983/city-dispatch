@@ -31,7 +31,8 @@ router.get("/getUser/:id", (req, res) => {
                 id: user._id,
                 notify : user.notify,
                 text : user.notifyText,
-                notifyTicket : user.notifyTicket
+                notifyTicket : user.notifyTicket,
+                avatar : user.avatar
             })
         })
         .catch((err) => {
@@ -365,6 +366,24 @@ router.put ("/resetPoints", (req, res)=>{
     .catch((err)=>{
         console.log(err);
         res.status(500).end()
+    })
+})
+
+router.put("/update-user", (req, res)=>{
+    console.log(req.body)
+    db.User.findByIdAndUpdate({_id : req.body.userId},{
+        [req.body.field] : req.body.text
+    },{new : true})
+    .then((user)=>{
+        let newUser = {
+            fullname : user.fullname,
+            email : user.email
+        }
+        res.send(newUser);
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(404).end();
     })
 })
 

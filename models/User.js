@@ -42,6 +42,9 @@ const UserSchema = new Schema({
     birthdate: {
         type : Date,
         default : Date.now
+    },
+    avatar : {
+        type : String
     }
 },{
     timestamps : true

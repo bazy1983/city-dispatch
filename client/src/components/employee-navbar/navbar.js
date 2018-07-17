@@ -32,9 +32,9 @@ class Navbar extends Component {
                             {window.location.pathname === "/inspector" ?
                                 <li><a onClick={this.props.toggleStat}>{this.props.showStat ? <span>Hide Stat</span> : <span>Show Stat</span>}</a></li>
                                 : null}
-                            <li><a >two</a></li>
+                            {/* <li><a >two</a></li>
                             <li className="divider" tabIndex="-1"></li>
-                            <li><a >three</a></li>
+                            <li><a >three</a></li> */}
                             <li><a onClick={this.signout}>Logout</a></li>
                             <li><a >Exit</a></li>
                         </ul>
