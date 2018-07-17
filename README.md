@@ -28,5 +28,6 @@ Browser Geolocation API to determine user's location.
 
 ## App Story
 First off, the app uses same login and register components to authenticate users and employees. but they link differently depending on their parant components.
-![](githubImages/login.png) ![](githubImages/register.png)
+![](githubImages/login.PNG)
+![](githubImages/register.PNG)
 
