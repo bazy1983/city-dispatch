@@ -68,11 +68,11 @@ Inspector story is simpler than User story.. The inspector takes the tickets whe
 
 ### Workflow Component:
 They head out to the job location and do there job using the workflow guideline component that leads the inspector to the correct steps to perform a successful dispatch.
-![] (githubImages/inspectorWorkflow.PNG)
+![](githubImages/inspectorWorkflow.PNG)
 
 ### Inspector Month Stat Component: 
 User can check the total count of tickets created for the current month, also the ammount of ticket been inspected.
-![] (githubImages/inspectorStats.PNG)
+![](githubImages/inspectorStats.PNG)
 
 ## City Worker Story:
 Finally, this is Worker's view.. Which is the simplest among the others.
@@ -82,11 +82,11 @@ the user has 2 components
 This component show all completed ticket for the current day, along with the total time it took the team to complete that job.
 it has simple dispatch button that will dispatch the worker on a random approved job.
 the logic behide that is to provide a fair chance for every dispatch team to get a random diffeculity job in the pool.
-![] (githubImages/completed.PNG)
+![](githubImages/completed.PNG)
 
 ### Workflow Component: 
 This component provides the worker with a means to perform a successful dispatch, with some checklist to minimize mistakes.
 it also provides a form so submit an image of the final product.
-![] (githubImages/workerWorkflow.PNG)
+![](githubImages/workerWorkflow.PNG)
 
 finally if you would like to visit this project, please click here [Pothole Patchers](https://pothole-patchers.herokuapp.com)
