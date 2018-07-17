@@ -1,29 +1,32 @@
-# Create React Express App
+# Pothole Patchers
 
-## About This Boilerplate
+## About the App
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+The Pothole Patcher app is a ticket management and dispatch system that can be used by any company that does some service / utility work to customers.
+The theme of this app is something that affects everyone, Potholes..
+Users can easily report potholes to be scheduled and dispatched on and get it fixed. Even better, the can get rewarded for every successful ticket they create.
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+## Technologies
 
-## Starting the app locally
-
-Start by installing front and backend dependencies. While in this directory, run the following command:
+This app uses many technologies and APIs:
 
 ```
-yarn install
+ExpressJS for creating back-end server.
+MongoDB database for data storage and users and employees login.
+PassportJS for Registration and login authentication.
+bcrypt for password encryption and hashing.
+other dependencies to make file storage to mongodb possible.
+ReactJS for front-end user interface.
+MaterializeCSS for layouts and components.
 ``
-
-This should install node modules within the server and the client folder.
-
-After both installations complete, run the following command in your terminal:
-
+APIs used:
 ```
-yarn start
+Google Maps API to show map box in the ticket.
+Open Weather API to show forecast weather.
+Browser Geolocation API to determine user's location.
 ```
 
-Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
+## App Story
+First off, the app uses same login and register components to authenticate users and employees. but they link differently depending on their parant components.
+![](githubImages/login.png) ![](githubImages/register.png)
 
-## Deployment (Heroku)
-
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.
