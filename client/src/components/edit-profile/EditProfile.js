@@ -55,7 +55,7 @@ class EditProfile extends React.Component {
                 window.location = "/";
             })
         } else {
-            this.setState({showDelete : true});
+            this.setState({showDelete : !this.state.showDelete});
         }
     }
 
@@ -101,7 +101,9 @@ class EditProfile extends React.Component {
                         <br/>
                         <br/>
                         <a className="waves-effect waves-light btn orange lighten-2 left" id="deleteBtn" onClick={this.onDeleteHandler}>Delete Account</a>
+                        {this.state.showDelete?
                         <input type="text" placeholder="Type in DELETE to continue" onChange={this.onDeleteActivator} id="deleteInput"/>
+                        :null}
                     </div>
                 </div>
 
