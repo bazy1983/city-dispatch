@@ -39,7 +39,7 @@ class CreateTicket extends Component {
             let uri = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyBg0e7AgzhzR0TlskMw9UaQKaEumFzEZy8`;
             axios(uri).then((location) => {
                 let address = location.data.results.filter((el) => {
-                    return el.geometry.location_type === "RANGE_INTERPOLATED"  //RANGE_INTERPOLATED
+                    return el.geometry.location_type === "APPROXIMATE"  //RANGE_INTERPOLATED
                 })
                 if (address) {
                     let addressArr = address[0].formatted_address.split(", ")
