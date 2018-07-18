@@ -33,7 +33,7 @@ module.exports = function (passport) {
     }), function (req, res) {
         res.cookie("_acc", req.user.id)
         // console.log(res.cookie.toString())
-        res.redirect("/profile")
+        res.redirect("/profile1")
         // res.send("hey")
     })
 

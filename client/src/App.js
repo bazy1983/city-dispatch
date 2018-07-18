@@ -18,7 +18,7 @@ class App extends Component {
         <div className="App">
           <Switch>
             <Route exact path="/" render={() => <User login="/auth/login" signup="/auth/signup"></User>} />
-            <Route path="/profile" component={UserDash} />
+            <Route exact path="/profile1" component={UserDash} />
             <Route exact path="/inspect" render={() => <AuthInspector login="/auth/inspect-login" signup="/auth/inspect-signup" />} />
             <Route exact path="/inspector" component={Inspector} />
             <Route exact path="/work" render={() => <AuthWork login="/auth/work-login" signup="/auth/work-signup" />} />
