@@ -6,6 +6,17 @@ The Pothole Patcher app is a ticket management and dispatch system that can be u
 The theme of this app is something that affects everyone, Potholes..
 Users can easily report potholes to be scheduled and dispatched on and get it fixed. Even better, the can get rewarded for every successful ticket they create.
 
+## Accounts
+You can use the following accounts to use the app:
+username : user , password : user ==>> for user view.
+username : inspector , password : inspector ==>> for inspector view.
+username : worker , password : worker ==>> for city worker view.
+
+## Links
+User view: https://pothole-patchers.herokuapp.com
+Inspector view: https://pothole-patchers.herokuapp.com/inspect
+City worker view: https://pothole-patchers.herokuapp.com/work
+
 ## Technologies
 
 This app uses many technologies and APIs:
