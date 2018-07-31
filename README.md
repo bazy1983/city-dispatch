@@ -8,8 +8,11 @@ Users can easily report potholes to be scheduled and dispatched on and get it fi
 
 ## Accounts
 You can use the following accounts to use the app:
+
 username : user , password : user ==>> for user view.
+
 username : inspector , password : inspector ==>> for inspector view.
+
 username : worker , password : worker ==>> for city worker view.
 
 ## Links
