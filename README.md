@@ -17,7 +17,9 @@ username : worker , password : worker ==>> for city worker view.
 
 ## Links
 User view: https://pothole-patchers.herokuapp.com
+
 Inspector view: https://pothole-patchers.herokuapp.com/inspect
+
 City worker view: https://pothole-patchers.herokuapp.com/work
 
 ## Technologies
